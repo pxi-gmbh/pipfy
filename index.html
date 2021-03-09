@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>hovercam</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- while in DEV, separate styling concerns into stylesheets -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/helper.css">
+    <link rel="stylesheet" href="styles/app.css">
+
+  </head>
+  <body>
+    <section>
+      <video id="outputvideo" autoplay>
+      </video>
+
+      <canvas id="canvas" width="640" height="480"></canvas>
+
+      <video id="inputvideo" autoplay>
+      </video>
+    </section>
+
+    <section>
+      <button class="capture button--secondary" type="button" name="start" onclick="captureVideo()">capture video</button>
+      <button class="pip button--secondary" type="button" name="pip" onclick="pipClick()">float video</button>
+      <button class="mirrorChange button--secondary" type="button" name="pip" onclick="changeOutput(!isMirror)">
+        <span class="toMirror"> flip video </span>
+        <span class="toNormal"> reset flip </span>
+      </button>
+    </section>
+
+    <footer>
+      <div class="intro">
+        <p lang="en">a floating webcam image for screen recordings.</p>
+      </div>
+      <div id="imprint">
+        <p lang="en">free. <a href="https://github.com/pxi-gmbh/hovercam">open source</a>. By <a href="https://agentur.pxi.gmbh/"><strong>pxi</strong>❘agentur</a> (imprint).</p>
+      </div>
+      <section id="about" class="is-modal">
+        <button class="button--secondary" onclick="toggleAbout();">
+          <span lang="en">close</span>
+        </button>
+        <div lang="en">
+          <h3>how to use</h3>
+          <p><i>hovercam</i> can help you put a video image of yourself on your desktop for screen recordings and screen sharing in video conferencing software. no app download needed. thanks to the <em>picture-in-picture</em> browser technology you can arrange your video on your screen right along the software or presentation you want to share. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
+          <p>you can also flip the image so the video works as a mirror. this should help orient yourself to interact with things on your screen. it makes pointing at things with your video image much easier. however, because we are using very recent technology, not all browsers work well with this.</p>
+          <p><strong>works best in google chrome</strong></p>
+        </div>
+      </section>
+      <button class="button--secondary" onclick="toggleAbout();">
+        <span lang="en">how to use</span>
+      </button>
+    </footer>
+
+  </body>
+
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="help.js"></script>
+</html>

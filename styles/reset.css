@@ -1,0 +1,138 @@
+/*
+ * CSS RESET
+ * Jakob's minimalist normalization
+ * helps accessibility considerations and dark mode
+ */
+html{
+  /* define standard typography rules and global variables for document */
+  color: var(--color-copy);
+  background-color: var(--color-background);
+  font-family: var(--font-body);
+  font-size: 100%; /* start with browser default (16px) */
+  font-size-adjust: 0.42; /* normalize x-height of font */
+  font-smoothing: auto; /* antialiased only for white on black to eliminate sub-pixel-rendering */
+  font-feature-settings: "calt" on, "liga" off, "dlig" on, "kern" on; /* add special cases where necessary: e.g. table numbering in tables, swashes in calligraphic headlines */
+  text-size-adjust: 100%; /* prevent adjustments of font size after orientation changes in IE and iOS. */
+  max-width: 160em; /* declare maximum range of screen size where design works */
+}
+html * {
+  /* set all elements to border-box model for easier size calculations */
+	box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility; /* optimizeSpeed for body copy. optimizeLegibility has very expensive page rendering load for long texts and prohibitive on older mobile devices. add legibility only to sections or microcopy */
+}
+/*TEMPORARILY DISABLED: dark mode*/
+/*@media (prefers-color-scheme: dark) {*/
+  /* simple dark mode to respect OS dark mode settings */
+/*  html {
+    color: var(--color-background);*/
+    /*background-color: var(--color-copy);*/ /* don't use full black to avoid blur issue on mobile scroll */
+    /*font-smoothing: antialiased;*/ /* antialiased only for white on black to eliminate sub-pixel-rendering */
+/*  }
+}*/
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+  /* reset display for browser consistency */
+  display: block;
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+template,
+[hidden] {
+  display: none;
+}
+button,
+input {
+  /* reset form elements for browser consistency */
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+}
+input {
+  width: 100%;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html [type="button"],
+html [type="reset"],
+html [type="submit"] {
+    -webkit-appearance: button; /* make clickable items styleable in mobile browsers */
+}
+button,
+html [role="button"]{
+  cursor:pointer;
+}
+textarea {
+  overflow: auto;
+}
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  white-space: normal;
+  padding: 0;
+}
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+  [type="search"]::-webkit-search-cancel-button,
+  [type="search"]::-webkit-search-decoration {
+ -webkit-appearance: none;
+}
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* make clickable items stylable in mobile browsers */
+  font: inherit;
+}
+progress {
+  /* reset vertical-alignment for browser consistency */
+  vertical-align: baseline;
+}
+svg:not(:root) {
+  /* hide SVG overflow in IE. */
+  overflow: hidden;
+}
+::selection {
+  background: #aaa; /* nicer text selection colors */
+  color: black; /* nicer text selection colors */
+}
+@media (prefers-reduced-motion: reduce) {
+  /* disable animations for accessibility reasons (with tiny duration to keep JS-event listeners intact */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,24 @@
+.mirror-active .toMirror,
+.toNormal{
+  display:none;
+}
+.mirror-active .toNormal {
+  display:unset;
+}
+
+#inputvideo, canvas {
+  display:none;
+}
+.video-active button.capture,
+button.pip, button.mirrorChange {
+  display:none;
+}
+
+.video-active button.pip,
+.video-active button.mirrorChange {
+  display:unset;
+}
+
+.pip-active button.pip {
+  display:none;
+}
