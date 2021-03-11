@@ -32,10 +32,10 @@ input[type='range'].active{
 
 /*temporary as it does not work without flip
 
-*/
 button.button--size{
 display:none;
 }
 .mirror-active button.button--size{
 display:unset;
 }
+*/

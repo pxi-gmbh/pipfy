@@ -50,8 +50,10 @@ var inputvideo;
           ctx.drawImage(inputvideo, crop.x, crop.y);
           if(ongoingloop)loopTimeout = setTimeout(loop,40);
         }
-       ctx.translate(video.videoWidth,0);
-       if(activateMirror)ctx.scale(-1,1);
+       if(activateMirror){         
+         ctx.translate(video.videoWidth,0);
+         ctx.scale(-1,1);
+       }
        if(!ongoingloop){
          ongoingloop=true;
          loop();
