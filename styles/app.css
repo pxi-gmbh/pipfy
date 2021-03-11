@@ -22,3 +22,20 @@ button.pip, button.mirrorChange {
 .pip-active button.pip {
   display:none;
 }
+
+input[type='range']{
+  display:none;
+}
+input[type='range'].active{
+  display:unset;
+}
+
+/*temporary as it does not work without flip
+
+*/
+button.button--size{
+display:none;
+}
+.mirror-active button.button--size{
+display:unset;
+}
