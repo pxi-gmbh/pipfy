@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Audiobridge 🎤</title>
+    <script src="audiobridge.js"></script>
+    <link rel="stylesheet" href="audiobridge.css">
+  </head>
+  <body class="langen">
+    <input id="microphoneActive" type="checkbox" oninput="microphone.init(this.checked)">
+    <label for="microphoneActive">
+      <span class="langen" title="Activates the Microphone (you have to accept the query from the browser)">Activate Microphone</span>
+    </label>
+    <div id="configMicro">
+      <input id="configMicrophoneVolume" type="range" oninput="microphone.setVolume(this.value/100)" min="0" max="300" value="100">
+      <input type="checkbox" name="mute" id="mute" value="" onclick="microphone.mute(this.checked)">
+      <label for="mute">Mute Microphone</label>
+    </div>
+  </body>
+</html>
