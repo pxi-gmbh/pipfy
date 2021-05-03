@@ -84,8 +84,31 @@ function changeOutput(toMirror, toCanvas) {
   isMirror = toMirror;
   document.body.classList.toggle('mirror-active', isMirror);
   let output = document.getElementById('outputvideo');
-  if (isMirror || toCanvas) output.srcObject = outputstream;
-  else output.srcObject = inputstream;
+  if (isMirror || toCanvas){
+    output.srcObject = outputstream;
+    console.log('canvas-stream activated');
+  }else {
+    output.srcObject = inputstream;
+    console.log('direct-stream activated');
+  }
+//  let canvas = document.getElementById('canvas');
+//  if(hasToResize)this.setCanvasSize(canvas.width, canvas.height);
+
+}
+
+
+
+function toggleMirror(toMirror){
+  let output = document.getElementById('outputvideo');
+  let inputV = document.getElementById('inputvideo');
+  let hasToResize = inputV.videoWidth>output.videoWidth || inputV.videoHeight > output.videoHeight;
+  isMirror=toMirror;
+  if(toMirror || hasToResize){
+    calculateCrop();
+    videoToCanvas(isMirror);
+  }else{
+    changeOutput(toMirror);
+  }
 }
 
 function calculateCrop() {
@@ -129,6 +152,13 @@ function setCanvasSize(width, height) {
   let canvas = document.getElementById('canvas');
   canvas.width = width;
   canvas.height = height;
+  let inputV = document.getElementById('inputvideo');
+  let hasToResize = inputV.videoWidth>width || inputV.videoHeight > height;
+  console.log('has to resize:',hasToResize);
+  if(!hasToResize && !isMirror){
+    changeOutput();
+    return;
+  }
   calculateCrop();
   videoToCanvas(isMirror);
 }
