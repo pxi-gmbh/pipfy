@@ -16,7 +16,7 @@
  --drop-shadow-hover: -3px -3px 5px var(--color-white), 3px 3px 5px var(--color-shadow);
 }
 body {
- font-size: 1em;
+ font-size: 1.3em;
  text-align: center;
  font-family: var(--font-monospace);
 }

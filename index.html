@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="styles/app.css">
 
   </head>
-  <body class="">
+  <body>
     <section>
       <video id="outputvideo" autoplay>
       </video>
@@ -49,11 +49,6 @@
     <footer>
       <div class="intro">
         <p lang="en">a floating webcam image for screen recordings.</p>
-        <p lang="en">experimental: <a href="./audiobridge.html">route your mic to the browser.</a>
-        <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>.</p>
-      </div>
-      <div id="imprint">
-        <p lang="en">free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <a href="https://agentur.pxi.gmbh/"><strong>pxi</strong>❘agentur</a> (imprint).</p>
       </div>
       <section id="about" class="is-modal">
         <button class="button--secondary" onclick="toggleAbout();">
@@ -66,7 +61,7 @@
           <p>you can flip the image so the video works like a mirror. this should help orient yourself to interact with things on your screen. it makes pointing at things with your video image much easier.</p>
           <p>you can crop the webcam to arrange the windows on your desktop in a helpful setup. we prefer to use our webcam in portrait mode to give more room to other elements on the screen.</p>
           <p>you can run several instances in seperate browser tabs. you will need to connect multiple webcams. this way you could put a speaker and a sign language translator on the desktop in a live recording or streaming session.</p>
-          <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome</p>
+          <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
           <hr>
           <p>the <a href="./audiobridge.html"><strong>audiobridge</strong></a> is another accessibility hack: you can use it to route your microphone input to a browser window in chrome and use the captioning API to generate automatic subtitles. disable sound output from the browser tab (right click) to avoid echoes.</p>
           <p>thanks. practice solidarity, stay positive. you got this.</p>
@@ -76,6 +71,11 @@
       <button class="button--secondary" onclick="toggleAbout();">
         <span lang="en">how to use</span>
       </button>
+      <div id="imprint">
+        <p lang="en">free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <a href="https://agentur.pxi.gmbh/"><strong>pxi</strong>❘agentur</a> (imprint).</p>
+        <p lang="en">experimental: <a href="./audiobridge.html">route your mic to the browser.</a>
+        <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>.</p>
+      </div>
     </footer>
 
   </body>

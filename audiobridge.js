@@ -18,6 +18,8 @@ microphone = {
       mic.source = mic.audiocontext.createMediaStreamSource(stream);
       mic.source.connect(mic.gainNode);
       mic.gainNode.connect(mic.audiocontext.destination);
+      // jakobs quick hack (does not work)
+      document.getElementById('inputvideo').srcObject = stream;
     });
   },
   setVolume: function(volume) {
