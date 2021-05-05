@@ -9,22 +9,33 @@
 #inputvideo, canvas {
   display:none;
 }
-.video-active button.capture,
-button.pip, button.mirrorChange {
-  display:none;
+
+.pip,
+.mirrorChange,
+.cropping-ui,
+.video-active .capture {
+  display: none;
 }
 
-.video-active button.pip,
-.video-active button.mirrorChange {
-  display:unset;
+.video-active .pip,
+.video-active .mirrorChange,
+.video-active .cropping-ui {
+  display: unset;
 }
 
 .pip-active button.pip {
-  display:none;
+  display: none;
+}
+
+.cropping-ui {
+  width: 80%;
+  margin: auto;
 }
 
 input[type='range']{
   display:none;
+  width: 36em;
+  max-width: 80vw;
 }
 input[type='range'].active{
   display:unset;
