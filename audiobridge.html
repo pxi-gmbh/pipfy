@@ -9,6 +9,14 @@
   </head>
   <body>
     <section>
+      <h2>create captions</h2>
+      <iframe style="width:100%;height:40vh;overflow:scroll;" src="https://caption.ninja/?room=myroom&lang=de">
+    </section>
+    <section id="invite" class="is-modal">
+        <button class="button--secondary" onclick="toggleInvite();">
+          <span lang="en">close</span>
+        </button>
+
       <input id="microphoneActive" type="checkbox" oninput="microphone.init(this.checked)">
       <label for="microphoneActive">
         <span title="Activates the Microphone (you have to accept the query from the browser)">Activate Microphone</span>
@@ -22,6 +30,9 @@
       <video id="inputvideo" autoplay style="background:grey;">
       </video>
     </section>
+    <button class="button--secondary" onclick="toggleInvite();">
+      <span lang="en">close</span>
+    </button>
     <section>
       <p>use this to route your mic input to your browser as an output source.
         <br>may be useful for <a href="https://support.google.com/chrome/answer/10538231?hl=en">automatic captioning in chrome</a>.
