@@ -383,7 +383,8 @@ captions.guardian.createKey = async function(iv, passw){
 
 //pipify:
 captions.pipify = {
-  finals:[],
+  // finals:[],
+  lastFinal:'',
   active:false,
   fontsize:30,
   init: function(){
@@ -434,7 +435,8 @@ captions.pipify = {
   writeText: function(text){
     this.lastInterim = text;
     let res="";
-    if(this.finals.length>0)res+=this.finals.join('. ')+'. ';
+    // if(this.finals.length>0)res+=this.finals.join('. ')+'. ';
+    if(this.lastFinalTime && Date.now()-this.lastFinalTime<2000)res+=this.lastFinal;
     res+=text;
     let canvas = document.getElementById("pipcanvas");
     let ctx = canvas.getContext("2d");
@@ -445,22 +447,26 @@ captions.pipify = {
     ctx.textBaseline = "bottom";
     // ctx.fillStyle = "red";
     // ctx.textAlign = "center";
-    let txtsize = ctx.measureText(res)
-    let textwidth = txtsize.width; //pixel-width of text
-    let maxwidth = canvas.width-10; //last 10 pixels should be free
-    let posx=0;
+    // let txtsize = ctx.measureText(res)
+    // let textwidth = txtsize.width; //pixel-width of text
+    // let maxwidth = canvas.width-10; //last 10 pixels should be free
+    // let posx=0;
     // if(maxwidth<textwidth)
-    posx=maxwidth-textwidth; //allways to the right seems better
+    // posx=maxwidth-textwidth; //allways to the right seems better
     // else console.log('textwidth smaller maxwidth?',textwidth,res);
     let posy = canvas.height - 10;
+    ctx.textAlign="right";
+    let posx=canvas.width-10;
     ctx.fillText(res, posx, posy);
   },
   pushFinal: function(text){
-    this.finals.push(text);
+    // this.finals.push(text);
+    this.lastFinal=text;
+    this.lastFinalTime=Date.now();
   },
   deleteFinal: function(){
-    this.finals.shift();
-    this.writeText(this.lastInterim);
+    // this.finals.shift();
+    // this.writeText(this.lastInterim);
   },
   changeWidth: function(width){
     let canvas = document.getElementById("pipcanvas");
@@ -593,36 +599,54 @@ this is especially useful because you can mix different list types to get sublis
       st = st.split(',').join(' , ');
       return st.split(' ');
   },
-  simpleTest: function(){
+  simpleTest: async function(count){
     this.wordlist = this.createWordList();
     this.lastStumble = "";
-    this.walkList();
-  },
-  walkList: function(){
-    if(this.wordlist.length==0)return; //break
-    let act = this.wordlist.shift();
-    let wait=200; //wait 100ms
-    if(act.indexOf('.')>-1 || act.indexOf(',')>-1 || act.indexOf('\n')>-1){
-      wait=400;
-      if(act.indexOf('.')){
-        wait=600;
-        // this.lastStumble='';
-        captions.displayLastFinal(this.lastStumble);
-        //captions.displayText('');
-        this.lastStumble='';
-      }
-      if(act.indexOf('\n')){
-        wait=1000;
-        captions.displayLastFinal(this.lastStumble);
-        //captions.displayText('');
-        this.lastStumble='';
-      }
-    }else{
-      this.lastStumble+=' '+act;
-      //speak word:
-      captions.displayText(this.lastStumble);
+    let done = await this.walkthrough();
+    if(count>0){
+        console.log('finished run, '+(count-1)+' to go');
+        this.simpleTest(count-1);
+        return;
     }
-    this.runningTest = setTimeout('tester.walkList()',wait);
-  }
+    console.log('test is over');
+    console.log(done);
+
+  },
+  walkthrough: async function(){
+    return new Promise((resolve,reject)=>{
+      tester.walkList(resolve);
+    });
+  },
+  walkList: async function(resolve){
+      if(this.wordlist.length==0){
+        resolve('yeah'); //break the loop
+        console.log('do i need a return here?')
+        return;
+      }
+      let act = this.wordlist.shift();
+      let wait=200; //wait 100ms
+      if(act.indexOf('.')>-1 || act.indexOf(',')>-1 || act.indexOf('\n')>-1){
+        wait=400;
+        if(act.indexOf('.')){
+          wait=600;
+          // this.lastStumble='';
+          captions.displayLastFinal(this.lastStumble);
+          //captions.displayText('');
+          this.lastStumble='';
+        }
+        if(act.indexOf('\n')){
+          wait=1000;
+          captions.displayLastFinal(this.lastStumble);
+          //captions.displayText('');
+          this.lastStumble='';
+        }
+      }else{
+        this.lastStumble+=' '+act;
+        //speak word:
+        captions.displayText(this.lastStumble);
+      }
+      this.runningTest = setTimeout(function(){tester.walkList(resolve)},wait);
+
+  },
 
 }
