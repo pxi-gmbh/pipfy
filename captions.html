@@ -3,68 +3,150 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
-    <meta content="utf-8" http-equiv="encoding" />
-    <meta name="copyright" content="Steve Seguin & pxi.gmbh" />
     <meta name="description" content="This is a free-to-use captioning tool via speech-to-text API." />
-    <meta name="author" content="Steve Seguin & pxi.gmbh" />
+    <meta name="author" content="pxi.gmbh" />
+    <title>pipfy  🎤 captions</title>
 
-    <title>captions 🎤</title>
-
-    <script src="captions.js"></script>
+    <!-- while in DEV, separate styling concerns into stylesheets -->
+    <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/helper.css">
     <link rel="stylesheet" href="styles/captions.css">
   </head>
-  <body>
+  <body onload="captions.init()">
     <div>
-      <h1>what the font</h1>
-      <button class="button--secondary" onclick="">
-        <span lang="en">start captioning</span>
+      <button id="caption-startstop" class="button--secondary" onclick="captions.toggleCaption();captions.pipify.toggle()">
+        <span id="caption-start-text" lang="en">toggle captioning</span>
+        <span id="caption-stop-text" class="hidden" lang="en">stop captioning</span>
       </button>
-      <button class="button--secondary" onclick="">
-        <span lang="en">select language</span>
+      <!--
+      <button id="pipifytoggle"class="button--secondary" onclick="captions.pipify.toggle()">
+        <span lang="en">create floating subtitles</span>
+        </button>
+      -->
+
+      <br>
+      <button class="button--primary" onclick="captions.showLanguageDialog()">
+        <span id="caption-language-select" lang="en">
+          select language (currently: <span id="caption-language-value"></span>)
+        </span>
       </button>
-      <button class="button--secondary" onclick="">
-        <span lang="en">float</span>
-        <!-- use canvas + PiP to keep only the last two lines visible in floating window -->
+      <button id="captions-startws" class="button--primary" onclick="captions.startActiveWebsocket()">
+        <span lang="en">generate output feed</span>
       </button>
-      <button class="button--secondary" onclick="">
+      <button id="captions-stopws" class="button--primary hidden" onclick="captions.stopWebsocket()">
+        <span lang="en">stop output feed</span>
+      </button>
+
+    <section style="display:none;">
+      <button class="button--secondary" onclick="" disabled>
         <span lang="en">copy to clipboard</span>
       </button>
+      <button id="debugbutton" class="button--secondary hidden" onclick="document.body.classList.toggle('show-debug')">
+        <span lang="en">show debug</span>
+      </button>
     </div>
+    <div id="debug-div">
+    </div>
+  </section>
 
+  <section id="pipsection" style="display:none;">
+    <h2>pip-configuration <button class="closebutton" type="button" name="button" onclick="captions.pipify.toggle()">x</button> </h2>
+    <ul>
+      <li>
+        <label for="pip-width">Width:</label>
+        <select id="pip-width" class="" name="" onchange="captions.pipify.changeWidth(this.value)">
+          <option value="200">small</option>
+          <option value="400" >medium</option>
+          <option value="700" selected>large</option>
+          <option value="1000">x-large</option>
+          <option value="1400">xx-large</option>
+        </select>
+      </li>
+      <li>
+        <label for="pip-fontsize">Font size:</label>
+        <select id="pip-fontsize" class="" name="" onchange="captions.pipify.changeFontsize(this.value)">
+          <option value="10">small</option>
+          <option value="25" selected>medium</option>
+          <option value="50">large</option>
+          <option value="70">x-large</option>
+        </select>
+      </li>
+      <li>
+        <button id="startpipbutton" class="button--secondary" type="button" name="button" onclick="captions.pipify.activatePip()">Start Picture in Picture</button>
+      </li>
+    </ul>
+    <h3>preview:</h3>
+    <canvas id="pipcanvas" width="800" height="50"></canvas>
+    <video id="outputvideo" autoplay></video>
+  </section>
 
   <div id="interm" class="output">
-  <p>This is a free-to-use captioning tool for use in Google Chrome. It uses a proprietary Google API to generate captions from your voice input. The output of this app is mirrored here: <a id="shareLink" href="overlay.html" target='_blank'>*ERROR GENERATING LINK*</a>.</p>
-  <p>allow browser access to mic. just start speaking out loud. select mic from drop down. use virtual audio cable to route desktop audio to your mic and caption everything said on screen.</p>
+    <p><a id="shareLink" href="" target='_blank'></a></p>
   </div>
-  <div id="output" class="output"></div>
+
+  <section style="display:none;">
+    <h3>interim output</h3>
+    <div id="outputwrapper">
+      <span id="output" class="output"></span>
+    </div>
+    <div id="interim"></div>
+    <h3>final output</h3>
+    <div id="output2" class="output"></div>
+    <div id="final"></div>
+  </section>
+
+  <br><a href="index.html" class="button--secondary">create floating webcam video</a>
+
   <footer>
     <div class="intro">
-      <p lang="en">a floating webcam image for screen recordings.</p>
     </div>
     <section id="about" class="is-modal">
-      <button class="button--secondary" onclick="toggleAbout();">
+      <button class="button--primary" onclick="toggleAbout();">
         <span lang="en">close</span>
       </button>
       <div lang="en">
         <h3>how to use</h3>
-        <p><strong>pipfy.captions</strong> allows you to put your mic input as automatic captioning in a floating window on your desktop. it's an accessibility accommodation for use in web conferencing, when you share your screen. if you use a virtual audio cable, you can also use it as a personal accessibility service and auto-caption everything on your desktop.</p>
+        <p><a href="./captions.html"><strong>pipfy.captions</strong></a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
+        <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
+        <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
+        <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
+        <p>exporting the text (with time stamps) is currently disabled. you can enable it, if you know HTML and CSS or wait for us to improve usability.</p>
+        <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers.</p>
+        <hr>
+        <p><strong>pipfy.video</strong> can help you put a video image of yourself on your desktop. helpful for screen recordings and screen sharing in video conferencing software. no app download needed. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
+        <p>thanks to the <strong>picture-in-picture</strong> browser technology you can arrange your video on your screen right along the software or presentation you want to share. the video will float above all other windows. even above a presentation running in full screen, if you enable the hover effect after starting presentation mode.</p>
+        <p>you can flip the image so the video works like a mirror. this should help orient yourself to interact with things on your screen. it makes pointing at things with your video image much easier.</p>
+        <p>you can crop the webcam to arrange the windows on your desktop in a helpful setup. we prefer to use our webcam in portrait mode to give more room to other elements on the screen.</p>
+        <p>you can run several instances in seperate browser tabs. you will need to connect multiple webcams. this way you could put a speaker and a sign language translator on the desktop in a live recording or streaming session.</p>
+        <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
+        <hr>
         <p>thanks. practice solidarity, stay positive. you got this.</p>
-        <p>made with care and too little time from your friendly design lab at <a src="https://agentur.pxi.gmbh"><strong>pxi</strong>|lab<a> (currently in german only).</p>
-          <p>Much love and gratitude for original Code and websocket Server by Steve Seguin</p>
-          <p>found an issue? we may have to scale up server space. contact us!</p>
+        <p>made with lots of care but too little time from your friendly design lab at <a src="https://agentur.pxi.gmbh"><strong>pxi</strong>|lab<a> (currently in german only).</p>
       </div>
     </section>
-    <button class="button--secondary" onclick="toggleAbout();">
+    <button class="button--primary" onclick="toggleAbout();">
       <span lang="en">how to use</span>
     </button>
     <div id="imprint">
       <p lang="en">free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <a href="https://agentur.pxi.gmbh/"><strong>pxi</strong>❘agentur</a> (imprint).</p>
-      <p lang="en">experimental: <a href="./audiobridge.html">route your mic to the browser.</a>
-      <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>.</p>
+      <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>. please give it a try.</p>
     </div>
   </footer>
+
+    <div id="dialog--language" class="dialog-wrapper hidden">
+      <div class="dialog-inner-wrapper">
+        <h2>
+          Select Language
+          <button class="closebutton" type="button" name="button" onclick="document.getElementById('dialog--language').classList.add('hidden');">X</button>
+        </h2>
+        <div class="textfield-wrapper">
+          <input id="language-selection-field" type="text" name="" value="" onkeyup="captions.showLanguageRecomendation(this.value)">
+          <div id="language-recomendation">
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script type="text/javascript" src="help.js"></script>
   <script type="text/javascript" src="captions.js"></script>

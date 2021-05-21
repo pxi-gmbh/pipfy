@@ -59,29 +59,30 @@ input[type="text"]:focus{
 }
 .button--primary {
   color: var(--color-black);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: bold;
-  padding: 1.5em;
-  border-radius: 3em;
-  border: 1px solid transparent;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  border-radius: 1em;
+  border: 2px solid var(--color-black);
   background-color: var(--color-background);
-  box-shadow: var(--drop-shadow);
+  font-family: consolas, monospace;
+  text-decoration: none;
 }
 .button--primary:hover {
   box-shadow: var(--drop-shadow-hover);
 }
 .button--primary:active,
 .button--primary:focus {
-  border: 1px solid currentcolor;
-  background-color: var(--color-contrast);
+  border: 2px solid var(--color-contrast);
 }
 .button--secondary {
   color: var(--color-white);
   padding: 0.5em 1em;
+  margin: 0.5em;
   border-radius: 1em;
   border: 1px solid transparent;
   background-color: var(--color-black);
+  font-family: consolas, monospace;
+  text-decoration: none;
 }
 .button--secondary:hover,
 .button--secondary:active,
