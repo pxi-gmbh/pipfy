@@ -135,7 +135,6 @@ var captions = {
     }
     let roomid = search.substring(roompos,dpos);
     let pw = search.substring(pwpos);
-    // ws.pw = pw;
     this.guardian.password=pw;
     ws.room = roomid;
     this.startWebsocket({passive:true});
@@ -143,9 +142,6 @@ var captions = {
   startActiveWebsocket: function(){
     let pw = this.generatePw();
     this.guardian.password = pw;
-    // let room = this.generateRoom();
-    //ws.pw = pw;
-    // ws.room = room;
     this.transmitOverWebsocket = true;
     this.startWebsocket({});
 
@@ -186,9 +182,9 @@ var captions = {
     return enct;
   },
   decryptText: async function(text){
-    let stt=Date.now();
+    // let stt=Date.now();
     let dect = await this.guardian.decryptText(text,this.guardian.password);
-    console.log(">>",dect,"\ndecryption time",(stt-Date.now()))
+    // console.log(">>",dect,"\ndecryption time",(stt-Date.now()))
     return dect;
   },
   recieveSync: async function(text){
@@ -216,6 +212,7 @@ var ws = {
   init2: function(passive){
     console.log('websocket created');
     if(passive){
+      document.body.classList.add('status--passive');
       this.sendMessage(this.room,'joinRoom');
       this.server.onmessage = function incoming(msg){
             let data;
@@ -229,7 +226,7 @@ var ws = {
                 console.log(e, msg);
                 return;
             };
-            console.log("recieved message:",data);
+          // console.log("recieved message:",data);
             if(data.action==="sync"){
                 captions.recieveSync(data.msg);
             }
@@ -253,7 +250,7 @@ var ws = {
                 console.log(e, msg);
                 return;
             };
-            console.log("recieved message:",data);
+          // console.log("recieved message:",data);
 
             if(data.action==="init"){
                 ws.id = data.id;
@@ -315,7 +312,7 @@ captions.guardian.decryptText = async function(text, password){
 
 captions.guardian.decrypt = async function(buffer, iv, pw){
   let keyguardian = await this.createKey(iv, pw);
-  console.log("decoding starts");
+// console.log("decoding starts");
   let plainTextBuffer;
   try{
     plainTextBuffer = await this.crypto.subtle.decrypt(keyguardian.alg, keyguardian.key, buffer);
@@ -324,7 +321,7 @@ captions.guardian.decrypt = async function(buffer, iv, pw){
     console.log("decryption has failed!");
     return "decryption has failed";
   }
-  console.log("decoding has ended");
+// console.log("decoding has ended");
   return new TextDecoder().decode(plainTextBuffer); //TODO: error-handling
 }
 
@@ -337,7 +334,7 @@ captions.guardian.encryptText = async function(text, password){
 }
 
 captions.guardian.encrypt = async function(plaintext, pw){
-  console.log("encrypt plaintext:"+plaintext.substring(0,20));
+// console.log("encrypt plaintext:"+plaintext.substring(0,20));
   let plainTextUtf8 = new TextEncoder().encode(plaintext); //changing into UTF-8-Array
   let keyguardian = await this.createKey(null, pw);
   if(keyguardian==null)return {encbuffer:null, iv:null};
@@ -363,7 +360,7 @@ captions.guardian.encBufferToString = function(encResult){
 }
 
 captions.guardian.createKey = async function(iv, passw){
-  console.log("creating Key with iv"+iv);
+// console.log("creating Key with iv"+iv);
   let password = passw;
   if(this.password ==null && passw==null)return;
   if(passw==null)password = this.password;
@@ -377,7 +374,7 @@ captions.guardian.createKey = async function(iv, passw){
   }
   keyguardian.alg = { name: 'AES-GCM', iv: keyguardian.iv };
   keyguardian.key = await crypto.subtle.importKey('raw', passwordHash, keyguardian.alg, false, ['encrypt', 'decrypt']);
-  console.log("key created");
+// console.log("key created");
   return keyguardian;
 }
 
@@ -392,7 +389,7 @@ captions.pipify = {
   toggle: async function(){
     this.active=!this.active;
     if(this.active){
-      //activate pip
+      //activate/prepare pip
       document.body.classList.add('status--pip')
       //write some blank text to get video preview visible:
       this.writeText(' ');
@@ -402,11 +399,10 @@ captions.pipify = {
       output.srcObject = outputstream;
       output.addEventListener('loadedmetadata',
         function(){
-          console.log('feddig geladen?');
+          console.log('video is ready, start pip');
           captions.pipify.activatePip();
         }
       )
-      // this.activatePip()
     }else{
       //deactivate pip if active
       document.body.classList.remove('status--pip');
@@ -430,7 +426,7 @@ captions.pipify = {
     });
     this.pipelement = await op.requestPictureInPicture();
 
-    console.log(this.pipelement);
+  // console.log(this.pipelement);
   },
   writeText: function(text){
     this.lastInterim = text;
@@ -445,15 +441,6 @@ captions.pipify = {
     ctx.fillStyle = "#FFFFFF";
     ctx.font = this.fontsize+"px Comic Sans MS";
     ctx.textBaseline = "bottom";
-    // ctx.fillStyle = "red";
-    // ctx.textAlign = "center";
-    // let txtsize = ctx.measureText(res)
-    // let textwidth = txtsize.width; //pixel-width of text
-    // let maxwidth = canvas.width-10; //last 10 pixels should be free
-    // let posx=0;
-    // if(maxwidth<textwidth)
-    // posx=maxwidth-textwidth; //allways to the right seems better
-    // else console.log('textwidth smaller maxwidth?',textwidth,res);
     let posy = canvas.height - 10;
     ctx.textAlign="right";
     let posx=canvas.width-10;
@@ -567,33 +554,8 @@ whenever your cursor is in such an element you are offered the context menu cont
 it tells you the type of the element you are in and gives you a helping hand in handling the element. in case of the list element it offers you to change the list type.
 this is especially useful because you can mix different list types to get sublists and still keep an overview while in code
   `,
-  prefixBlanc: function(text){
-    let res = text;
-    let changes = [];
-    let actindex = text.indexOf('.');
-    while(actindex>-1){
-      changes.push(actindex);
-      actindex = text.indexOf('.',actindex+1);
-    }
-    actindex = text.indexOf(',');
-    while(actindex>-1){
-      changes.push(actindex);
-      actindex = text.indexOf(',',actindex+1);
-    }
-    actindex = text.indexOf('\n');
-    while(actindex>-1){
-      changes.push(actindex);
-      changes.push(actindex+1);
-      actindex = text.indexOf('\n',actindex+1);
-    }
-    changes.sort();
-    for(let x=changes.length-1;x>=0;x--)res=res.substring(0,changes[x])+" "+res[changes[x]]+" "+res.substring(changes[x]+1);
-    return res;
-  },
   createWordList: function(text){
       let st = text || this.sampletext;
-      // st = st.replace(/[^a-zA-Z0-9]/g,' ');
-      // st = this.prefixBlanc(st);
       st = st.split('\n').join(' \n ');
       st = st.split('.').join(' . ');
       st = st.split(',').join(' , ');
@@ -620,7 +582,6 @@ this is especially useful because you can mix different list types to get sublis
   walkList: async function(resolve){
       if(this.wordlist.length==0){
         resolve('yeah'); //break the loop
-        console.log('do i need a return here?')
         return;
       }
       let act = this.wordlist.shift();
