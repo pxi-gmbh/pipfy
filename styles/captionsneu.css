@@ -40,6 +40,17 @@ canvas{
 #debug-div{
   display: none;
 }
+.show-debug #debug-div{
+  display: block;
+  border:1px solid;
+  padding:1ch;
+}
+.show-debug #debug-div::before{
+  display: block;
+  content:'DEBUG:';
+  border:1px solid;
+  padding:1ch;
+}
 
 :disabled{
   display:none;
