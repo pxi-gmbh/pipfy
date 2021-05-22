@@ -74,6 +74,12 @@ ul{
   list-style:none;
 }
 
+#text {
+  display: none;
+}
+.status--passive #text  {
+  display: block;
+}
 /*css for passive state:*/
 .status--passive #outputwrapper {
     position: fixed;

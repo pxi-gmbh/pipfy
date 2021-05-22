@@ -16,7 +16,7 @@
   <body onload="captions.init()">
     <div>
       <button id="caption-startstop" class="button--secondary" onclick="captions.toggleCaption();captions.pipify.toggle()">
-        <span id="caption-start-text" lang="en">toggle captioning</span>
+        <span id="caption-start-text" lang="en">toggle captioning (in chrome)</span>
         <span id="caption-stop-text" class="hidden" lang="en">stop captioning</span>
       </button>
       <!--
@@ -85,22 +85,22 @@
     <p><a id="shareLink" href="" target='_blank'></a></p>
   </div>
 
-  <section style="display:none;">
+  <section id="text">
     <h3>interim output</h3>
     <div id="outputwrapper">
       <span id="output" class="output"></span>
     </div>
     <div id="interim"></div>
-    <h3>final output</h3>
+    <h4>total output below</h4>
     <div id="output2" class="output"></div>
     <div id="final"></div>
   </section>
-
+  <div class="intro">
+    <p>the text-to-speech conversion relies on google servers. use at your discretion.</p>
+  </div>
   <br><a href="index.html" class="button--secondary">create floating webcam video</a>
 
   <footer>
-    <div class="intro">
-    </div>
     <section id="about" class="is-modal">
       <button class="button--primary" onclick="toggleAbout();">
         <span lang="en">close</span>
@@ -112,7 +112,7 @@
         <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
         <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
         <p>exporting the text (with time stamps) is currently disabled. you can enable it, if you know HTML and CSS or wait for us to improve usability.</p>
-        <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers.</p>
+        <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. <strong>as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers</strong>.</p>
         <hr>
         <p><strong>pipfy.video</strong> can help you put a video image of yourself on your desktop. helpful for screen recordings and screen sharing in video conferencing software. no app download needed. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
         <p>thanks to the <strong>picture-in-picture</strong> browser technology you can arrange your video on your screen right along the software or presentation you want to share. the video will float above all other windows. even above a presentation running in full screen, if you enable the hover effect after starting presentation mode.</p>
