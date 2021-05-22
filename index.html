@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="description" content="This is a free-to-use tool to put your webcam video on your desktop." />
+    <meta name="author" content="pxi.gmbh" />
     <title>pipfy</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -26,7 +28,8 @@
     </section>
 
     <section>
-      <button class="capture button--secondary" type="button" name="start" onclick="captureVideo()">capture video</button>
+      <button class="capture button--secondary" type="button" name="start" onclick="captureVideo()">create floating webcam video</button>
+      <a href="captions.html" class="capture button--secondary" type="button" name="start">create floating captions feed</a>
       <button class="pip button--secondary" type="button" name="pip" onclick="pipClick()">float video <sup>*</sup></button>
       <button class="mirrorChange button--secondary" type="button" name="pip" onclick="toggleMirror(!isMirror)">
         <span class="toMirror"> flip video </span>
@@ -48,33 +51,37 @@
 
     <footer>
       <div class="intro">
-        <p lang="en">a floating webcam image for screen recordings.</p>
       </div>
       <section id="about" class="is-modal">
-        <button class="button--secondary" onclick="toggleAbout();">
+        <button class="button--primary" onclick="toggleAbout();">
           <span lang="en">close</span>
         </button>
         <div lang="en">
           <h3>how to use</h3>
-          <p><strong>pipfy</strong> can help you put a video image of yourself on your desktop. helpful for screen recordings and screen sharing in video conferencing software. no app download needed. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
+          <p><strong>pipfy.video</strong> can help you put a video image of yourself on your desktop. helpful for screen recordings and screen sharing in video conferencing software. no app download needed. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
           <p>thanks to the <strong>picture-in-picture</strong> browser technology you can arrange your video on your screen right along the software or presentation you want to share. the video will float above all other windows. even above a presentation running in full screen, if you enable the hover effect after starting presentation mode.</p>
           <p>you can flip the image so the video works like a mirror. this should help orient yourself to interact with things on your screen. it makes pointing at things with your video image much easier.</p>
           <p>you can crop the webcam to arrange the windows on your desktop in a helpful setup. we prefer to use our webcam in portrait mode to give more room to other elements on the screen.</p>
           <p>you can run several instances in seperate browser tabs. you will need to connect multiple webcams. this way you could put a speaker and a sign language translator on the desktop in a live recording or streaming session.</p>
           <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
           <hr>
-          <p>the <a href="./audiobridge.html"><strong>audiobridge</strong></a> is another accessibility hack: you can use it to route your microphone input to a browser window in chrome and use the captioning API to generate automatic subtitles. disable sound output from the browser tab (right click) to avoid echoes.</p>
+          <p><a href="./captions.html"><strong>pipfy.captions</strong></a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
+          <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
+          <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
+          <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
+          <p>exporting the text (with time stamps) is currently disabled. you can enable it, if you know HTML and CSS or wait for us to improve usability.</p>
+          <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers.</p>
+          <hr>
           <p>thanks. practice solidarity, stay positive. you got this.</p>
-          <p>made with care and too little time from your friendly design lab at <a src="https://agentur.pxi.gmbh"><strong>pxi</strong>|lab<a> (currently in german only).</p>
+          <p>made with lots of care but too little time from your friendly design lab at <a src="https://agentur.pxi.gmbh"><strong>pxi</strong>|lab<a> (currently in german only).</p>
         </div>
       </section>
-      <button class="button--secondary" onclick="toggleAbout();">
+      <button class="button--primary" onclick="toggleAbout();">
         <span lang="en">how to use</span>
       </button>
       <div id="imprint">
         <p lang="en">free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <a href="https://agentur.pxi.gmbh/"><strong>pxi</strong>❘agentur</a> (imprint).</p>
-        <p lang="en">experimental: <a href="./audiobridge.html">route your mic to the browser.</a>
-        <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>.</p>
+        <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>. please give it a try.</p>
       </div>
     </footer>
 

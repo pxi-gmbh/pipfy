@@ -1,6 +1,0 @@
-#configMicro{
-  display: none;
-}
-#microphoneActive:checked ~ #configMicro{
-  display: block;
-}
