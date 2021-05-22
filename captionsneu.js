@@ -445,15 +445,20 @@ captions.pipify = {
     ctx.textAlign="right";
     let posx=canvas.width-10;
     ctx.fillText(res, posx, posy);
+    this.lastFill=Date.now();
   },
   pushFinal: function(text){
     // this.finals.push(text);
     this.lastFinal=text;
     this.lastFinalTime=Date.now();
+    setTimeout("captions.pipify.blankAfterPause(2000)",2100);
   },
   deleteFinal: function(){
     // this.finals.shift();
     // this.writeText(this.lastInterim);
+  },
+  blankAfterPause: function(time){
+    if(Date.now()-this.lastFill>time)this.writeText('');
   },
   changeWidth: function(width){
     let canvas = document.getElementById("pipcanvas");
