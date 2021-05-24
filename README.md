@@ -2,7 +2,7 @@
 
 a web app to create a floating webcam image or floating subtitles on your desktop: picture-in-picture for your webcam and speech-to-text in a browser window. hence the name.
 
-hosted live at [https://pipfy.pxi.design](pipfy.pxi.design)
+hosted live at [https://pipfy.pxi.design](https://pipfy.pxi.design)
 
 ## usage
 
