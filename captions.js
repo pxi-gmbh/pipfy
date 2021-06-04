@@ -32,8 +32,11 @@ var captions = {
         if(event.results[x].isFinal){
           captions.finalTranscript+=event.results[x][0].transcript;
           captions.displayLastFinal(event.results[x][0].transcript);
-          captions.finals.push({timestamp:Date.now()-captions.starttime,content:event.results[x][0].transcript});
+          captions.finals.push({start:captions.laststarttime, end:Date.now()-captions.starttime,content:event.results[x][0].transcript});
+          captions.laststarttime=undefined;
+
         }else{
+          if(captions.laststarttime==undefined)captions.laststarttime=Date.now()-captions.starttime;
           interimTranscript+=event.results[x][0].transcript;
         }
       }
@@ -43,7 +46,6 @@ var captions = {
     }
     this.recognition.onstart = function(event){
       console.log('recognition started');
-      captions.starttime = Date.now();
       captions.isRunning = true;
       document.getElementById('debug-div').innerText="ongoing record";
     }
@@ -85,6 +87,7 @@ var captions = {
     wr.insertBefore(newFinal, op);
     op.innerText=" ";
     if(this.pipify.active)this.pipify.pushFinal(text);
+    if(this.transmitOverWebsocket)this.sendSync(text, true);
     setTimeout(this.removeLastFinal, 2000);
   },
   removeLastFinal: function(){
@@ -96,7 +99,7 @@ var captions = {
     this.shouldRun = true;
     document.body.classList.add('status-recording');
     this.recognition.start();
-
+    captions.starttime = Date.now();
   },
   stop: function(){
     this.shouldRun = false;
@@ -187,13 +190,14 @@ var captions = {
     // console.log(">>",dect,"\ndecryption time",(stt-Date.now()))
     return dect;
   },
-  recieveSync: async function(text){
+  recieveSync: async function(text, final){
     let dectext = await this.decryptText(text);
     // console.log(text,dectext);
     this.displayText(dectext);
   },
   sendSync: async function(text, final){
     let enctext = await this.encryptText(text);
+
     ws.sendMessage(enctext, 'sync');
   },
 }
