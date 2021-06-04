@@ -471,9 +471,12 @@ captions.pipify = {
 //possible languages:
 var availablelangs =
 // selection reduced for easier UX-development
-[['English',  ['en']],
-['Deutsch',   ['de']]];
-/* commented out languages for now
+// that is not a good idea as language is accent-based, therefore
+// en-AU gives better output for Australians, en-US better for most part of US etc.
+// so better do allow only groups.
+// [['English',  ['en']],
+// ['Deutsch',   ['de']]];
+//* commented out languages for now
 
 [['Afrikaans',       ['af-ZA']],
  ['Bahasa Indonesia',['id-ID']],
@@ -537,10 +540,13 @@ var availablelangs =
                      ['yue-Hant-HK', '粵語 (香港)']],
  ['日本語',           ['ja-JP']],
  ['Lingua latīna',   ['la']]];
- */
+ //*/
 
  var langcorts = [];
+
  for (var x=0;x<availablelangs.length;x++){
+   //only german and english:
+   if(availablelangs[x][0]!='Deutsch' && availablelangs[x][0]!='English')continue;
    for (var y=1;y<availablelangs[x].length;y++){
      langcorts.push(availablelangs[x][y][0]);
    }
