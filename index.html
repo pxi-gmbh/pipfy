@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no, viewport-fit=cover">
     <meta name="description" content="This is a free-to-use tool to put your webcam video on your desktop." />
     <meta name="author" content="pxi.gmbh" />
     <title>pipfy</title>
@@ -28,24 +28,29 @@
     </section>
 
     <section>
-      <button class="capture button--secondary" type="button" name="start" onclick="captureVideo()">create floating webcam video</button>
-      <a href="captions.html" class="capture button--secondary" type="button" name="start">create floating captions feed</a>
-      <button class="pip button--secondary" type="button" name="pip" onclick="pipClick()">float video <sup>*</sup></button>
+      <button class="capture" type="button" name="start" onclick="captureVideo()">create floating webcam video</button>
+      <span class="capture">or</span>
+      <a href="captions.html" class="capture" name="start">create floating captions feed</a>
+      <button class="pip" type="button" name="pip" onclick="pipClick()">float video <sup>*</sup></button>
       <button class="mirrorChange button--secondary" type="button" name="pip" onclick="toggleMirror(!isMirror)">
         <span class="toMirror"> flip video </span>
         <span class="toNormal"> reset flip </span>
       </button>
-      <br><br>
       <div class="cropping-ui">
         <p lang="en">*bug: <strong>right click</strong> on the video to enable <strong>picture in picture</strong>.</p>
         <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(640,360)">16:9</button>
         <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(640,480)">4:3</button>
         <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(360,480)">3:4</button>
         <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(360,360)">1:1</button>
-        <button class="button--secondary button--size active" type="button" name="button" onclick="let custom=prompt('enter width and height, separated by a comma, e.g. 200,300').split(',');setCanvasSize(custom[0],custom[1])">custom</button>
-        <br>
-        <input id="moveCropX" type="range" name="" value="50" min="0" max="100" onmouseup="moveCanvasX(this.value)">
-        <input id="moveCropY" type="range" name="" value="50" min="0" max="100" onmouseup="moveCanvasY(this.value)">
+        <button class="button--secondary button--size active" type="button" name="button" onclick="let custom=prompt('enter width and height in px, separated by a comma, e.g. 200,300').split(',');setCanvasSize(custom[0],custom[1])">custom</button>
+        <br><br>
+        <label for="moveCropX" class="crop--slider">move cutout left and right
+          <input id="moveCropX" type="range" name="" value="50" min="0" max="100" onmouseup="moveCanvasX(this.value)">
+        </label>
+        <label for="moveCropY" class="crop--slider">move cutout up and down
+          <input id="moveCropY" type="range" name="" value="50" min="0" max="100" onmouseup="moveCanvasY(this.value)">
+        </label>
+
       </div>
     </section>
 
@@ -53,7 +58,7 @@
       <div class="intro">
       </div>
       <section id="about" class="is-modal">
-        <button class="button--primary" onclick="toggleAbout();">
+        <button class="button--secondary" onclick="toggleAbout();">
           <span lang="en">close</span>
         </button>
         <div lang="en">
@@ -73,18 +78,45 @@
           <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers.</p>
           <hr>
           <p>thanks. practice solidarity, stay positive. you got this.</p>
-          <p>made with lots of care but too little time from your friendly design lab at <a src="https://agentur.pxi.gmbh"><strong>pxi</strong>|lab<a> (currently in german only).</p>
+          <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
         </div>
       </section>
-      <button class="button--primary" onclick="toggleAbout();">
+      <button class="button--secondary" onclick="toggleAbout();">
         <span lang="en">how to use</span>
       </button>
-      <div id="imprint">
-        <p lang="en">free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <a href="https://agentur.pxi.gmbh/"><strong>pxi</strong>❘agentur</a> (imprint).</p>
-        <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>. please give it a try.</p>
-      </div>
-    </footer>
+			<p>free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <code><a href="#">pxi|agentur</a></code>.</p>
+			<p>related: <a href="https://slidenotes.io/">put presentations in your browser</a>. please give it a try.</p>
+			<details>
+				<summary>
+					imprint and privacy policy
+				</summary>
+				<div class="grid">
+					<div>
+						<small>
+							<p>
+								<br>&copy; <span id="current-year"></span> &mdash;
+								pixelcraft innovation GmbH
+								<br>Karl-Heine-Straße 99 | 04229 Leipzig
+								<br>GF Jakob Jochmann (ViSdP)
+								<br>HRB 29619 | Leipzig | UstID DE291272096
+								<br>+49 152 27094501 | <span aria-label="write us an email" class="js-eml">hi[at]email.io</span>
+							</p>
+						</small>
+					</div>
+						<div>
+							<small>
+								<p><br>privacy policy: we do not collect any data. by law, the hoster collects anonymous data. see their privacy notice <a href="https://www.strato.de/datenschutz/">here</a></p>
+							</small>
+						</div>
+				</div>
 
+			</details>
+    </footer>
+    <script type="text/javascript">
+			window.onload = function(){
+				myEmail();
+			}
+		</script>
   </body>
 
   <script type="text/javascript" src="pipfy.js"></script>

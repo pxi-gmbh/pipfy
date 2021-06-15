@@ -37,8 +37,14 @@ input[type='range']{
   width: 36em;
   max-width: 80vw;
 }
+crop--slider{
+  display: none;
+}
 input[type='range'].active{
   display:unset;
+}
+crop--slider{
+  display: unset;
 }
 
 /*temporary as it does not work without flip

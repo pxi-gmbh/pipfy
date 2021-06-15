@@ -60,3 +60,45 @@ window.addEventListener("keyup",function(e){
     }
   }
 });
+
+// show current year
+document.getElementById("current-year").innerHTML = new Date().getUTCFullYear();
+
+// EMAIL JS
+// (for spam protection)
+// Usage:
+// * Fill in your email address in the variable ‘XXeml’ below,
+// * Put a span with class="js-XXemail" where you want the link,
+//
+function myEmail() {
+	var eml  = 'agentur'   // The email address...
+	eml += '@'
+	eml += 'pxi.gmbh'
+
+	var link = document.createElement("a");
+	link.setAttribute("href", "mailto:" + eml);
+	link.appendChild(document.createTextNode(eml));
+	var spans = getElementsByClass("span", "js-eml");
+	for (var i = 0; i < spans.length; i++)
+		spans[i].parentNode.replaceChild(link.cloneNode(true), spans[i]);
+
+	eml  = 'hi-again'   // The email address...
+	eml += '@'
+	eml += 'email.io'
+
+	var link = document.createElement("a");
+	link.setAttribute("href", "mailto:" + eml);
+	link.appendChild(document.createTextNode(eml));
+	var spans = getElementsByClass("span", "js-eml2");
+	for (var i = 0; i < spans.length; i++)
+		spans[i].parentNode.replaceChild(link.cloneNode(true), spans[i]);
+}
+// Returns an array of elements with the given class
+function getElementsByClass(elem, classname) {
+	var classes = new Array();
+	var alltags = document.getElementsByTagName(elem);
+	for (i = 0; i < alltags.length; i++)
+		if (alltags[i].className == classname)
+			classes[classes.length] = alltags[i];
+	return classes;
+}

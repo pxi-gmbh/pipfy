@@ -14,9 +14,13 @@
     <link rel="stylesheet" href="styles/captions.css">
   </head>
   <body onload="captions.init()">
+    <br>
+    <h1>speech to text captioning</h1>
+    <p>currently works exclusively in chrome</p>
+    <p>the text-to-speech conversion relies on google servers. use at your discretion.</p>
     <div>
-      <button id="caption-startstop" class="button--secondary" onclick="captions.toggleCaption();captions.pipify.toggle()">
-        <span id="caption-start-text" lang="en">toggle captioning (in chrome)</span>
+      <button id="caption-startstop" onclick="captions.toggleCaption();captions.pipify.toggle()">
+        <span id="caption-start-text" lang="en">toggle captioning</span>
         <span id="caption-stop-text" class="hidden" lang="en">stop captioning</span>
       </button>
       <!--
@@ -24,17 +28,16 @@
         <span lang="en">create floating subtitles</span>
         </button>
       -->
-
-      <br>
-      <button class="button--primary" onclick="captions.showLanguageDialog()">
+      <button class="button--secondary" onclick="captions.showLanguageDialog()">
         <span id="caption-language-select" lang="en">
           select language (currently: <span id="caption-language-value"></span>)
         </span>
       </button>
-      <button id="captions-startws" class="button--primary" onclick="captions.startActiveWebsocket()">
+      <label for="captions-startws">share a link to show your captions live</label>
+      <button id="captions-startws" class="button--secondary" onclick="captions.startActiveWebsocket()">
         <span lang="en">generate output feed</span>
       </button>
-      <button id="captions-stopws" class="button--primary hidden" onclick="captions.stopWebsocket()">
+      <button id="captions-stopws" class="button--secondary hidden" onclick="captions.stopWebsocket()">
         <span lang="en">stop output feed</span>
       </button>
 
@@ -42,7 +45,7 @@
       <button class="button--secondary" onclick="" disabled>
         <span lang="en">copy to clipboard</span>
       </button>
-      <button id="debugbutton" class="button--secondary hidden" onclick="document.body.classList.toggle('show-debug')">
+      <button id="debugbutton" class="hidden" onclick="document.body.classList.toggle('show-debug')">
         <span lang="en">show debug</span>
       </button>
     </div>
@@ -95,10 +98,7 @@
     <div id="output2" class="output"></div>
     <div id="final"></div>
   </section>
-  <div class="intro">
-    <p>the text-to-speech conversion relies on google servers. use at your discretion.</p>
-  </div>
-  <br><a href="index.html" class="button--secondary">create floating webcam video</a>
+  <br><a href="index.html">create floating webcam video</a>
 
   <footer>
     <section id="about" class="is-modal">
@@ -122,16 +122,45 @@
         <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
         <hr>
         <p>thanks. practice solidarity, stay positive. you got this.</p>
-        <p>made with lots of care but too little time from your friendly design lab at <a src="https://agentur.pxi.gmbh"><strong>pxi</strong>|lab<a> (currently in german only).</p>
+        <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
       </div>
     </section>
-    <button class="button--primary" onclick="toggleAbout();">
+    <button class="button--secondary" onclick="toggleAbout();">
       <span lang="en">how to use</span>
     </button>
-    <div id="imprint">
-      <p lang="en">free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <a href="https://agentur.pxi.gmbh/"><strong>pxi</strong>❘agentur</a> (imprint).</p>
-      <br>related: <a href="https://slidenotes.io">put presentations in your browser</a>. please give it a try.</p>
-    </div>
+    <p>free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <code><a href="#">pxi|agentur</a></code>.</p>
+    <p>related: <a href="https://slidenotes.io/">put presentations in your browser</a>. please give it a try.</p>
+    <details>
+      <summary>
+        imprint and privacy policy
+      </summary>
+      <div class="grid">
+        <div>
+          <small>
+            <p>
+              <br>&copy; <span id="current-year"></span> &mdash;
+              pixelcraft innovation GmbH
+              <br>Karl-Heine-Straße 99 | 04229 Leipzig
+              <br>GF Jakob Jochmann (ViSdP)
+              <br>HRB 29619 | Leipzig | UstID DE291272096
+              <br>+49 152 27094501 | <span aria-label="write us an email" class="js-eml">hi[at]email.io</span>
+            </p>
+          </small>
+        </div>
+          <div>
+            <small>
+              <p><br>privacy policy: we do not collect any data. by law, the hoster collects anonymous data. see their privacy notice <a href="https://www.strato.de/datenschutz/">here</a></p>
+            </small>
+          </div>
+      </div>
+
+    </details>
+  </footer>
+  <script type="text/javascript">
+    window.onload = function(){
+      myEmail();
+    }
+  </script>
   </footer>
 
     <div id="dialog--language" class="dialog-wrapper hidden">
