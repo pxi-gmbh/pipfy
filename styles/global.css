@@ -490,7 +490,7 @@ video{
 
 
 /* RESPONSIVE SETTINGS */
-@media only screen and (max-width: 80vh) {
+@media only screen and (max-width: 95vh) {
   body{
     font-size: calc(0.5em + 1vh);
     margin-left: 3em;
