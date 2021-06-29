@@ -182,7 +182,8 @@ fieldset{
 fieldset legend, label {
     display: block;
 }
-button{
+button,
+.button--primary{
   color: var(--background-color);
   background-color: var(--text-color);
   border: solid transparent var(--button-border-width-big);
@@ -227,7 +228,7 @@ summary:focus,
 [type="range"]{
   border: none;
   box-shadow: none;
-  padding: 0;
+  padding: 0.5em 0;
 }
 [type="range"]::-webkit-slider-runnable-track{
   width: 100%;
@@ -356,8 +357,9 @@ summary{
   cursor: pointer;
   background-color: var(--text-color);
   color: var(--background-color);
-  padding: var(--button-border-width-big);
+  padding: var(--button-border-width-big) 0.8em;
   border: solid var(--text-color) var(--button-border-width-big);
+  border-radius: 99em;
   transition: all 0.15s ease-in-out;
 }
 video{
@@ -369,6 +371,14 @@ video{
 
 
 /* IDS AND CLASSES */
+.center--horizontal{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.center--horizontal label{
+  max-width: 100%;
+}
 #pxi-logo{
   width: 5rem;
   height: 3rem;

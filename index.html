@@ -18,7 +18,7 @@
   </head>
   <body>
     <section>
-      <video id="outputvideo" autoplay>
+      <video class="center--horizontal" id="outputvideo" autoplay>
       </video>
 
       <canvas id="canvas" width="640" height="480"></canvas>
@@ -27,7 +27,7 @@
       </video>
     </section>
 
-    <section>
+    <section class="center--horizontal">
       <button class="capture" type="button" name="start" onclick="captureVideo()">create floating webcam video</button>
       <span class="capture">or</span>
       <a href="captions.html" class="capture" name="start">create floating captions feed</a>
@@ -50,7 +50,6 @@
         <label for="moveCropY" class="crop--slider">move cutout up and down
           <input id="moveCropY" type="range" name="" value="50" min="0" max="100" onmouseup="moveCanvasY(this.value)">
         </label>
-
       </div>
     </section>
 
@@ -70,7 +69,7 @@
           <p>you can run several instances in seperate browser tabs. you will need to connect multiple webcams. this way you could put a speaker and a sign language translator on the desktop in a live recording or streaming session.</p>
           <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
           <hr>
-          <p><a href="./captions.html"><strong>pipfy.captions</strong></a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
+          <p><a href="./captions.html">pipfy.captions</a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
           <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
           <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
           <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
@@ -81,9 +80,12 @@
           <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
         </div>
       </section>
-      <button class="button--secondary" onclick="toggleAbout();">
-        <span lang="en">how to use</span>
-      </button>
+      <section class="center--horizontal">
+        <button class="button--secondary" onclick="toggleAbout();">
+          <span lang="en">how to use</span>
+        </button>
+      </section>
+
 			<p>free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <code><a href="#">pxi|agentur</a></code>.</p>
 			<p>related: <a href="https://slidenotes.io/">put presentations in your browser</a>. please give it a try.</p>
 			<details>
@@ -105,7 +107,7 @@
 					</div>
 						<div>
 							<small>
-								<p><br>privacy policy: we do not collect any data. by law, the hoster collects anonymous data. see their privacy notice <a href="https://www.strato.de/datenschutz/">here</a></p>
+								<p><br>privacy policy: the video stays in your browser on your device. we do not collect any data. by law, the hoster collects anonymous data. see their privacy notice <a href="https://www.strato.de/datenschutz/">here</a></p>
 							</small>
 						</div>
 				</div>

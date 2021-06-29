@@ -163,7 +163,7 @@ var captions = {
     let poslangs = lookForLang(text);
     let res = '';
     for (var x=0;x<poslangs.length;x++){
-      res+=`<button onclick="captions.selectLanguage('${poslangs[x]}');">`+poslangs[x]+'</button>';
+      res+=`<button class="button--secondary" onclick="captions.selectLanguage('${poslangs[x]}');">`+poslangs[x]+'</button>';
     }
     document.getElementById('language-recomendation').innerHTML=res;
     document.getElementById('language-selection-field').classList.toggle('error',(poslangs.length==0));

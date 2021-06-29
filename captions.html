@@ -18,7 +18,7 @@
     <h1>speech to text captioning</h1>
     <p>currently works exclusively in chrome</p>
     <p>the text-to-speech conversion relies on google servers. use at your discretion.</p>
-    <div>
+    <div class="center--horizontal">
       <button id="caption-startstop" onclick="captions.toggleCaption();captions.pipify.toggle()">
         <span id="caption-start-text" lang="en">toggle captioning</span>
         <span id="caption-stop-text" class="hidden" lang="en">stop captioning</span>
@@ -33,7 +33,7 @@
           select language (currently: <span id="caption-language-value"></span>)
         </span>
       </button>
-      <label for="captions-startws">share a link to show your captions live</label>
+      <label for="captions-startws">share a link to show your captions live:</label>
       <button id="captions-startws" class="button--secondary" onclick="captions.startActiveWebsocket()">
         <span lang="en">generate output feed</span>
       </button>
@@ -98,7 +98,11 @@
     <div id="output2" class="output"></div>
     <div id="final"></div>
   </section>
-  <br><a href="index.html">create floating webcam video</a>
+  <section class="center--horizontal">
+    <br>
+    <a href="index.html">create floating webcam video</a>
+  </section>
+
 
   <footer>
     <section id="about" class="is-modal">
@@ -107,7 +111,7 @@
       </button>
       <div lang="en">
         <h3>how to use</h3>
-        <p><a href="./captions.html"><strong>pipfy.captions</strong></a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
+        <p><a href="./captions.html">pipfy.captions</a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
         <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
         <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
         <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
@@ -125,9 +129,12 @@
         <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
       </div>
     </section>
-    <button class="button--secondary" onclick="toggleAbout();">
-      <span lang="en">how to use</span>
-    </button>
+    <section class="center--horizontal">
+      <button class="button--secondary" onclick="toggleAbout();">
+        <span lang="en">how to use</span>
+      </button>
+    </section>
+
     <p>free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <code><a href="#">pxi|agentur</a></code>.</p>
     <p>related: <a href="https://slidenotes.io/">put presentations in your browser</a>. please give it a try.</p>
     <details>
@@ -165,15 +172,17 @@
 
     <div id="dialog--language" class="dialog-wrapper hidden">
       <div class="dialog-inner-wrapper">
-        <h2>
-          Select Language
-          <button class="closebutton" type="button" name="button" onclick="document.getElementById('dialog--language').classList.add('hidden');">X</button>
-        </h2>
-        <div class="textfield-wrapper">
-          <input id="language-selection-field" type="text" name="" value="" onkeyup="captions.showLanguageRecomendation(this.value)">
-          <div id="language-recomendation">
+        <button type="button" name="button" onclick="document.getElementById('dialog--language').classList.add('hidden');">close</button>
+        <section class="center--horizontal">
+          <h2>
+            select Language
+          </h2>
+          <div class="textfield-wrapper">
+            <!-- <input id="language-selection-field" type="text" name="" value="" onkeyup="captions.showLanguageRecomendation(this.value)"> -->
+            <div id="language-recomendation">
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </body>
