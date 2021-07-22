@@ -1,0 +1,104 @@
+#outputvideo {
+  display: block;
+  width: 80%;
+  height: 60%;
+  margin: auto;
+  background: repeating-linear-gradient(
+  45deg,
+  var(--color--background),
+  var(--color--background) 10px,
+  var(--color--text) 10px,
+  var(--color--text) 20px
+  );
+  opacity: 0.1;
+  z-index: -1;
+}
+.video-active #outputvideo {
+  opacity: 1;
+  background: none;
+}
+.video-active video {
+  width: auto;
+  max-width: 50vw;
+  max-height: 50vh;
+  margin: auto;
+}
+
+#inputvideo, canvas {
+  display: none;
+}
+main * {
+  --flex-grid--margin: calc(var(--vertical-rhythm) / 2);
+}
+main .flex-grid {
+  margin-top: var(--vertical-rhythm);
+}
+main button {
+  --component--max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 10ch;
+}
+button[name="start"] {
+  transform: translatey(-300%);
+  width: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.video-active #js--browser-warning {
+  display: none;
+}
+
+.mirror-active .toMirror,
+.toNormal {
+  display:none;
+}
+.mirror-active .toNormal {
+  display:unset;
+}
+.pip,
+.mirrorChange,
+.cropping-ui,
+.video-active .capture {
+  display: none;
+}
+.video-active .pip,
+.video-active .mirrorChange,
+.video-active .cropping-ui {
+  display: unset;
+}
+.pip-active button.pip {
+  display: none;
+}
+
+.cropping-ui {
+  text-align: center;
+}
+
+.cropping-ui input,
+/* HACK to quick-fix js only toggling the range-slider TODO fix in js */
+.cropping-ui input + label {
+  max-width: 100%;
+  opacity: .1;
+  pointer-events: none;
+}
+.cropping-ui input.active,
+/* HACK to quick-fix js only toggling the range-slider TODO fix in js */
+.cropping-ui input.active + label {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.crop--slider {
+}
+
+/*temporary as it does not work without flip
+
+button.button--size{
+display:none;
+}
+.mirror-active button.button--size{
+display:unset;
+}
+*/
