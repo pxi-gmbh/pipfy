@@ -2,190 +2,263 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="This is a free-to-use captioning tool via speech-to-text API." />
-    <meta name="author" content="pxi.gmbh" />
-    <title>pipfy  🎤 captions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="description" content="a free-to-use captioning tool via speech-to-text API" />
+    <meta name="author" content="pxi.design" />
+    <title>pipfy > captions</title>
+    <meta name="title" content="pipfy > captions" />
+		<meta name="image" content="img/pipfy_social-media-image.png">
 
-    <!-- while in DEV, separate styling concerns into stylesheets -->
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/helper.css">
-    <link rel="stylesheet" href="styles/captions.css">
+		<meta itemprop="name" content="pipfy > captions">
+		<meta itemprop="description" content="a free-to-use captioning tool via speech-to-text API">
+		<meta itemprop="image" content="img/pipfy_social-media-image.png">
+
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:title" content="pipfy | webcam">
+		<meta name="twitter:description" content="Free-to-use tool to put your webcam video on your desktop">
+		<meta name="twitter:image:src" content="pipfy-webcam/img/pipfy_social-media-image.png">
+
+		<meta name="og:title" content="pipfy > captions">
+		<meta name="og:description" content="a free-to-use captioning tool via speech-to-text API">
+		<meta name="og:type" content="website">
+		<meta name="og:image" content="img/pipfy_social-media-image.png">
+		<meta name="og:url" content="https://pipfy.pxi.design/captions.html">
+		<meta name="og:site_name" content="pipfy">
+
+    <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="img/favicon/site.webmanifest">
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="captions.css">
+
   </head>
-  <body onload="captions.init()">
-    <br>
-    <h1>speech to text captioning</h1>
-    <p>currently works exclusively in chrome</p>
-    <p>the text-to-speech conversion relies on google servers. use at your discretion.</p>
-    <div class="center--horizontal">
-      <button id="caption-startstop" onclick="captions.toggleCaption();captions.pipify.toggle()">
-        <span id="caption-start-text" lang="en">toggle captioning</span>
-        <span id="caption-stop-text" class="hidden" lang="en">stop captioning</span>
-      </button>
-      <!--
-      <button id="pipifytoggle"class="button--secondary" onclick="captions.pipify.toggle()">
-        <span lang="en">create floating subtitles</span>
-        </button>
-      -->
-      <button class="button--secondary" onclick="captions.showLanguageDialog()">
-        <span id="caption-language-select" lang="en">
-          select language (currently: <span id="caption-language-value"></span>)
-        </span>
-      </button>
-      <label for="captions-startws">share a link to show your captions live:</label>
-      <button id="captions-startws" class="button--secondary" onclick="captions.startActiveWebsocket()">
-        <span lang="en">generate output feed</span>
-      </button>
-      <button id="captions-stopws" class="button--secondary hidden" onclick="captions.stopWebsocket()">
-        <span lang="en">stop output feed</span>
-      </button>
+<body class="grid" onload="captions.init();">
+  <header>
+    <a href="https://agentur.pxi.gmbh/" aria-label="pxi-lab-homepage"><img id="pxi-logo" src="img/pxi-lab.svg"></a>
+    <div id="toggle--theme">
+      <button type="button" theme-toggle="light" aria-label="switch to light mode"><img src="img/light-button.svg" alt="light icon" theme-toggle="light"></button>
+      <button type="button" theme-toggle="dark" aria-label="switch to dark mode"><img src="img/dark-button.svg" alt="dark icon" theme-toggle="dark"></button>
+    </div>
+    <script type="text/javascript">
+      // toggle--theme (light/dark)
+      (function() {
+        var buttonsTheme = document.querySelectorAll('button[theme-toggle]');
+        for (var i = 0; i < buttonsTheme.length; i++) {
+
+          buttonsTheme[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            console.log("click");
+            document.querySelector('html').setAttribute(
+              'theme',
+              event.target.getAttribute('theme-toggle'));
+          },
+          false);
+        }
+      })();
+    </script>
+
+    <div id="warning--browser" class="warning is-hidden">
+      <p id="warning--browser--not-desktop" class="is-hidden"><strong>thanks for checking in!</strong> this web app is designed to put your webcam image on your desktop. we're not currently optimized for mobile use.</p>
+      <p id="warning--browser--not-chrome" class="is-hidden"><strong>thanks for checking in!</strong> we're sorry, but subtitles need to access an API that is only available in the chrome browser.</p>
+    </div>
+    <script>
+      (function() {
+        let ua = navigator.userAgent;
+
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
+          // on mobile
+          document.getElementById('warning--browser--not-desktop').classList.remove('is-hidden');
+          document.getElementById('warning--browser').classList.remove('is-hidden');
+        }
+        else if(/Chrome/i.test(ua)) {
+          // chrome, but not on mobile
+          return;
+        }
+        else {
+          // not on mobile, but not chrome
+          document.getElementById('warning--browser--not-chrome').classList.remove('is-hidden');
+          document.getElementById('warning--browser').classList.remove('is-hidden');
+        }
+      })();
+    </script>
+
+    <p style="float:left"><a href="./index.html">pipfy</a> > captions</p>
+    <p style="float:right"><a href="#help" class="modal--link">help</a></p>
+    <br style="clear:both">
+    <hr>
+  </header>
+
+  <noscript class="warning margin-top:0">
+    <p><strong>sorry</strong> this is an interactive web app. you will need to activate javascript to proceed. for obvious reasons this is designed for desktop browsers. for perhaps less obvious reasons subtitles only work in google chrome.</p>
+  </noscript>
+
+  <main class="margin-top:0">
+
+    <button class="button--secondary margin-top:0" onclick="captions.showLanguageDialog()">
+      <span id="caption-language-select">
+        select language (currently: <span id="caption-language-value"></span>)
+      </span>
+    </button>
+
+    <button id="caption-startstop" class="button--primary" onclick="captions.toggleCaption();captions.pipify.toggle()">
+      <span id="caption-start-text">toggle captioning</span>
+      <span id="caption-stop-text" class="hidden">stop captioning</span>
+    </button>
+
+    <aside class="text-align:center"><small>text-to-speech conversion relies on google servers. use at your discretion.</small></aside>
+
+    <button id="captions-startws" class="button--secondary" onclick="captions.startActiveWebsocket()">
+      <span>generate output feed</span>
+    </button>
+    <button id="captions-stopws" class="button--primary hidden" onclick="captions.stopWebsocket()">
+      <span>stop output feed</span>
+    </button>
 
     <section style="display:none;">
       <button class="button--secondary" onclick="" disabled>
-        <span lang="en">copy to clipboard</span>
+        <span>copy to clipboard</span>
       </button>
-      <button id="debugbutton" class="hidden" onclick="document.body.classList.toggle('show-debug')">
-        <span lang="en">show debug</span>
+      <button id="debugbutton" class="button--secondary hidden" onclick="document.body.classList.toggle('show-debug')">
+        <span>show debug</span>
       </button>
-    </div>
-    <div id="debug-div">
-    </div>
-  </section>
+      <div id="debug-div">
+      </div>
+    </section>
 
-  <section id="pipsection" style="display:none;">
-    <h2>pip-configuration <button class="closebutton" type="button" name="button" onclick="captions.pipify.toggle()">x</button> </h2>
-    <ul>
-      <li>
-        <label for="pip-width">Width:</label>
-        <select id="pip-width" class="" name="" onchange="captions.pipify.changeWidth(this.value)">
-          <option value="200">small</option>
-          <option value="400" >medium</option>
-          <option value="700" selected>large</option>
-          <option value="1000">x-large</option>
-          <option value="1400">xx-large</option>
-        </select>
-      </li>
-      <li>
-        <label for="pip-fontsize">Font size:</label>
-        <select id="pip-fontsize" class="" name="" onchange="captions.pipify.changeFontsize(this.value)">
-          <option value="10">small</option>
-          <option value="25" selected>medium</option>
-          <option value="50">large</option>
-          <option value="70">x-large</option>
-        </select>
-      </li>
-      <li>
-        <button id="startpipbutton" class="button--secondary" type="button" name="button" onclick="captions.pipify.activatePip()">Start Picture in Picture</button>
-      </li>
-    </ul>
-    <h3>preview:</h3>
-    <canvas id="pipcanvas" width="800" height="50"></canvas>
-    <video id="outputvideo" autoplay></video>
-  </section>
+    <section id="pipsection" style="display:none;">
+      <h2>pip-configuration <button class="closebutton" type="button" name="button" onclick="captions.pipify.toggle()">x</button> </h2>
+      <ul>
+        <li>
+          <label for="pip-width">Width:</label>
+          <select id="pip-width" class="" name="" onchange="captions.pipify.changeWidth(this.value)">
+            <option value="200">small</option>
+            <option value="400" >medium</option>
+            <option value="700" selected>large</option>
+            <option value="1000">x-large</option>
+            <option value="1400">xx-large</option>
+          </select>
+        </li>
+        <li>
+          <label for="pip-fontsize">Font size:</label>
+          <select id="pip-fontsize" class="" name="" onchange="captions.pipify.changeFontsize(this.value)">
+            <option value="10">small</option>
+            <option value="25" selected>medium</option>
+            <option value="50">large</option>
+            <option value="70">x-large</option>
+          </select>
+        </li>
+        <li>
+          <button id="startpipbutton" class="button--secondary" type="button" name="button" onclick="captions.pipify.activatePip()">Start Picture in Picture</button>
+        </li>
+      </ul>
+      <h3>preview:</h3>
+      <canvas id="pipcanvas" width="800" height="50"></canvas>
+      <video id="outputvideo" autoplay></video>
+    </section>
 
-  <div id="interm" class="output">
-    <p><a id="shareLink" href="" target='_blank'></a></p>
+    <div id="interm" class="output">
+      <p><a id="shareLink" href="" target='_blank'></a></p>
+    </div>
+
+    <section id="text">
+      <h3>interim output</h3>
+      <div id="outputwrapper">
+        <span id="output" class="output"></span>
+      </div>
+      <div id="interim"></div>
+      <h4>total output below</h4>
+      <div id="output2" class="output"></div>
+      <div id="final"></div>
+    </section>
+
+
+  </main>
+
+
+
+  <aside aria-role="help section" id="help" class="modal--wrapper">
+    <span class="modal--background" aria-hidden="true" tabindex="-1" onclick="location.hash='#close'"></span>
+    <button id="help--trap-top" class="is-invisible">start of help modal, jump to last focusable element</button>
+    <div class="modal--content" id="help--content">
+      <a  href="#close" class="modal--link">close</a>
+      <h3>how to use</h3>
+      <p><strong>pipfy.captions</strong> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
+      <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
+      <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
+      <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
+      <p>exporting the text (with time stamps) is currently disabled. you can enable it, if you know HTML and CSS or wait for us to improve usability.</p>
+      <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers.</p>
+      <hr>
+      <p>thanks. practice solidarity, stay positive. you got this.</p>
+      <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
+    </div>
+    <button id="help--trap-bottom" class="is-invisible">end of help modal, jump to first focusable element</button>
+  </aside>
+  <script type="text/javascript" src="modals.js"></script>
+
+  <div id="dialog--language" class="dialog-wrapper hidden">
+    <div class="dialog-inner-wrapper">
+      <button class="closebutton" type="button" name="button" onclick="document.getElementById('dialog--language').classList.add('hidden');">close</button>
+      <h4>select captioning language</h4>
+      <div class="textfield-wrapper">
+        <input style="display:none" id="language-selection-field" type="text" name="" value="" onkeyup="captions.showLanguageRecomendation(this.value)">
+        <div id="language-recomendation"></div>
+      </div>
+    </div>
   </div>
 
-  <section id="text">
-    <h3>interim output</h3>
-    <div id="outputwrapper">
-      <span id="output" class="output"></span>
-    </div>
-    <div id="interim"></div>
-    <h4>total output below</h4>
-    <div id="output2" class="output"></div>
-    <div id="final"></div>
-  </section>
-  <section class="center--horizontal">
-    <br>
-    <a href="index.html">create floating webcam video</a>
-  </section>
-
-
   <footer>
-    <section id="about" class="is-modal">
-      <button class="button--primary" onclick="toggleAbout();">
-        <span lang="en">close</span>
-      </button>
-      <div lang="en">
-        <h3>how to use</h3>
-        <p><a href="./captions.html">pipfy.captions</a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
-        <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
-        <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
-        <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
-        <p>exporting the text (with time stamps) is currently disabled. you can enable it, if you know HTML and CSS or wait for us to improve usability.</p>
-        <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. <strong>as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers</strong>.</p>
-        <hr>
-        <p><strong>pipfy.video</strong> can help you put a video image of yourself on your desktop. helpful for screen recordings and screen sharing in video conferencing software. no app download needed. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
-        <p>thanks to the <strong>picture-in-picture</strong> browser technology you can arrange your video on your screen right along the software or presentation you want to share. the video will float above all other windows. even above a presentation running in full screen, if you enable the hover effect after starting presentation mode.</p>
-        <p>you can flip the image so the video works like a mirror. this should help orient yourself to interact with things on your screen. it makes pointing at things with your video image much easier.</p>
-        <p>you can crop the webcam to arrange the windows on your desktop in a helpful setup. we prefer to use our webcam in portrait mode to give more room to other elements on the screen.</p>
-        <p>you can run several instances in seperate browser tabs. you will need to connect multiple webcams. this way you could put a speaker and a sign language translator on the desktop in a live recording or streaming session.</p>
-        <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
-        <hr>
-        <p>thanks. practice solidarity, stay positive. you got this.</p>
-        <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
-      </div>
-    </section>
-    <section class="center--horizontal">
-      <button class="button--secondary" onclick="toggleAbout();">
-        <span lang="en">how to use</span>
-      </button>
+    <hr>
+    <section class="flex-grid" id="about">
+      <p>free. <a href="https://github.com/pxi-gmbh/pipfy" target="_blank">open source</a>. no installation. no signup.
+        but you can <a href="https://gumroad.com/l/compad-cards" target="_blank">buy us a coffee</a> if you want. we'd be thrilled.
+      </p>
+      <form action="https://mail.pxi.gmbh/sendy/subscribe" method="POST" accept-charset="utf-8">
+        <label for="about--email" class="is-invisible">sign up for our newsletter</label>
+        <input type="email" name="email" id="about--email" required placeholder="your@email.com">
+        <button type="submit" name="submit">subscribe</button>
+        <br>
+        <div style="display:none;">
+        	<label for="hp">HP</label><br/>
+        	<input type="text" name="hp" id="hp"/>
+      	</div>
+        <label>
+          <input type="checkbox" name="gdpr" required id="gdpr">
+          i'd like lab notes from <code><strong>pxi</strong></code> sent to this email and i'm happy with
+        </label> <span><a href="#imprint" onclick="getElementById('imprint').setAttribute('open', true);">the terms</a></span>
+        <input type="hidden" name="list" value="K6XGJHWQ4XmVUsKM892EuIIw"/>
+      	<input type="hidden" name="subform" value="yes"/>
+      </form>
     </section>
 
-    <p>free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <code><a href="#">pxi|agentur</a></code>.</p>
-    <p>related: <a href="https://slidenotes.io/">put presentations in your browser</a>. please give it a try.</p>
-    <details>
-      <summary>
-        imprint and privacy policy
+    <details class="imprint" id="imprint">
+      <summary role="button" onclick="if(!this.parentElement.hasAttribute('open')){setTimeout(function(){window.scrollBy(0,150);},50);this.parentElement.setAttribute('aria-expanded','true')}else{this.parentElement.setAttribute('aria-expanded','false')}">
+        imprint & privacy policy
       </summary>
-      <div class="grid">
+      <div class="flex-grid">
         <div>
-          <small>
-            <p>
-              <br>&copy; <span id="current-year"></span> &mdash;
-              pixelcraft innovation GmbH
-              <br>Karl-Heine-Straße 99 | 04229 Leipzig
-              <br>GF Jakob Jochmann (ViSdP)
-              <br>HRB 29619 | Leipzig | UstID DE291272096
-              <br>+49 152 27094501 | <span aria-label="write us an email" class="js-eml">hi[at]email.io</span>
-            </p>
-          </small>
+          <p>
+            &copy; <span id="current-year"></span> &mdash;
+            <script>// show current year
+              document.getElementById("current-year").innerHTML = new Date().getUTCFullYear();
+            </script>
+            pixelcraft innovation GmbH
+            <br>Karl-Heine-Straße 99 | 04229 Leipzig
+            <br>GF Jakob Jochmann (ViSdP)
+            <br>HRB 29619 | Leipzig | UstID DE291272096
+            <br>+49 152 27094501 | <span aria-label="write us an email" class="js--email">lab [at] pxi.design</span>
+          </p>
         </div>
-          <div>
-            <small>
-              <p><br>privacy policy: we do not collect any data. by law, the hoster collects anonymous data. see their privacy notice <a href="https://www.strato.de/datenschutz/">here</a></p>
-            </small>
-          </div>
+        <div>
+          <p>we practice consent based data sovereignty. no tracking, no nonsense. if you subscribe to our emails you can withdraw consent at any time. poof. be advised that using auto-captions will require processing your speech on Google servers. see our detailed <a href="https://github.com/pxi-gmbh/pipfy/blob/main/legal.md">terms & privacy notice</a></p>
+        </div>
       </div>
-
     </details>
   </footer>
-  <script type="text/javascript">
-    window.onload = function(){
-      myEmail();
-    }
-  </script>
-  </footer>
 
-    <div id="dialog--language" class="dialog-wrapper hidden">
-      <div class="dialog-inner-wrapper">
-        <button type="button" name="button" onclick="document.getElementById('dialog--language').classList.add('hidden');">close</button>
-        <section class="center--horizontal">
-          <h2>
-            select Language
-          </h2>
-          <div class="textfield-wrapper">
-            <!-- <input id="language-selection-field" type="text" name="" value="" onkeyup="captions.showLanguageRecomendation(this.value)"> -->
-            <div id="language-recomendation">
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </body>
-  <script type="text/javascript" src="help.js"></script>
-  <script type="text/javascript" src="captions.js"></script>
-  </html>
+</body>
+<script type="text/javascript" src="captions.js"></script>
+</html>

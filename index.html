@@ -1,126 +1,144 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no, viewport-fit=cover">
-    <meta name="description" content="This is a free-to-use tool to put your webcam video on your desktop." />
-    <meta name="author" content="pxi.gmbh" />
-    <title>pipfy</title>
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="description" content="Free-to-use-tools for a floating webcam video and speech-to-text" />
+  <meta name="author" content="pxi.gmbh" />
+  <title>pipfy</title>
+  <meta name="title" content="pipfy" />
+  <meta name="description" content="Free-to-use-tools for a floating webcam video and speech-to-text"/>
+  <meta name="image" content="pipfy/img/pipfy_social-media-image.png">
 
-    <!-- while in DEV, separate styling concerns into stylesheets -->
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/helper.css">
-    <link rel="stylesheet" href="styles/app.css">
+  <meta itemprop="name" content="pipfy">
+  <meta itemprop="description" content="Free-to-use-tools for a floating webcam video and speech-to-text">
+  <meta itemprop="image" content="pipfy/img/pipfy_social-media-image.png">
 
-  </head>
-  <body>
-    <section>
-      <video class="center--horizontal" id="outputvideo" autoplay>
-      </video>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="pipfy">
+  <meta name="twitter:description" content="Free-to-use-tools for a floating webcam video and speech-to-text">
+  <meta name="twitter:image:src" content="pipfy/img/pipfy_social-media-image.png">
 
-      <canvas id="canvas" width="640" height="480"></canvas>
+  <meta name="og:title" content="pipfy">
+  <meta name="og:description" content="Free-to-use-tools for a floating webcam video and speech-to-text">
+  <meta name="og:type" content="website">
+  <meta name="og:image" content="pipfy/img/pipfy_social-media-image.png">
+  <meta name="og:url" content="https://pipfy.pxi.design/">
+  <meta name="og:site_name" content="pipfy">
 
-      <video id="inputvideo" autoplay>
-      </video>
+  <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="img/favicon/site.webmanifest">
+
+  <!-- while in DEV, separate styling concerns into stylesheets -->
+  <link rel="stylesheet" href="index.css">
+
+</head>
+<body class="grid">
+  <header>
+    <a href="https://agentur.pxi.gmbh/" aria-label="pxi-lab-homepage"><img id="pxi-logo" src="img/pxi-lab.svg"></a>
+
+<p style="float:left"><strong>pipfy</strong>: float things on your desktop</p>
+<!-- open help modal -->
+<p style="float:right"><a href="#help" class="modal--link">help</a></p>
+<br style="clear:both">
+<hr>
+</header>
+
+  <noscript class="warning">
+    <p><strong>sorry</strong> this is an interactive web app. you will need to activate javascript to proceed. for obvious reasons this is designed for desktop browsers. for perhaps less obvious reasons subtitles only work in google chrome.</p>
+  </noscript>
+
+  <main class="flex-grid margin-top:0">
+    <div>
+      <h3><a href="webcam.html" class="button--appearance button--primary" style="padding-left:3ch; padding-right:3ch;">start webcam</a></h3>
+      <p class="text-align:center margin-top:0">crop your webcam image <br>and position it where you need it.</p>
+    </div>
+
+    <div>
+      <h3><a href="captions.html" class="button--appearance button--primary" style="padding-left:3ch; padding-right:3ch;">start captions</a></h3>
+      <p class="text-align:center margin-top:0">create a speech-to-text feed <br>for your microphone or remotely.</p>
+    </div>
+  </main>
+
+  <aside aria-role="help section" id="help" class="modal--wrapper">
+    <!-- not a link to keep it out of tabindex -->
+    <span class="modal--background" aria-hidden="true" tabindex="-1" onclick="location.hash='#close'"></span>
+    <!-- trap buttons wrap the content. js will move user focus when triggered -->
+    <button id="help--trap-top" class="is-invisible">start of help modal, jump to last focusable element</button>
+    <div class="modal--content" id="help--content">
+      <a  href="#close" class="modal--link">close</a>
+      <h3>how to use</h3>
+      <p><a href="/webcam.html">pipfy.webcam</a> can help you put a video image of yourself on your desktop. helpful for screen recordings and screen sharing in video conferencing software. no app download needed. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
+      <p>thanks to the <strong>picture-in-picture</strong> browser technology you can arrange your video on your screen right along the software or presentation you want to share. the video will float above all other windows. even above a presentation running in full screen, if you enable the hover effect after starting presentation mode.</p>
+      <p>you can flip the image so the video works like a mirror. this should help orient yourself to interact with things on your screen. it makes pointing at things with your video image much easier.</p>
+      <p>you can crop the webcam to arrange the windows on your desktop in a helpful setup. we prefer to use our webcam in portrait mode to give more room to other elements on the screen.</p>
+      <p>you can run several instances in seperate browser tabs. you will need to connect multiple webcams. this way you could put a speaker and a sign language translator on the desktop in a live recording or streaming session.</p>
+      <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
+      <hr>
+      <p><a href="/captions.html">pipfy.captions</a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
+      <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
+      <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
+      <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
+      <p>exporting the text (with time stamps) is currently disabled. you can enable it, if you know HTML and CSS or wait for us to improve usability.</p>
+      <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers.</p>
+      <hr>
+      <p>thanks. practice solidarity, stay positive. you got this.</p>
+      <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
+    </div>
+    <button id="help--trap-bottom" class="is-invisible">end of help modal, jump to first focusable element</button>
+  </aside>
+  <script type="text/javascript" src="modals.js"></script>
+
+  <footer>
+    <hr>
+    <section class="flex-grid" id="about">
+      <p>free. <a href="https://github.com/pxi-gmbh/pipfy" target="_blank">open source</a>. no installation. no signup.
+        but you can <a href="https://gumroad.com/l/compad-cards" target="_blank">buy us a coffee</a> if you want. we'd be thrilled.
+      </p>
+      <form action="https://mail.pxi.gmbh/sendy/subscribe" method="POST" accept-charset="utf-8">
+        <label for="about--email" class="is-invisible">sign up for our newsletter</label>
+        <input type="email" name="email" id="about--email" required placeholder="your@email.com">
+        <button type="submit" name="submit">subscribe</button>
+        <br>
+        <div style="display:none;">
+        	<label for="hp">HP</label><br/>
+        	<input type="text" name="hp" id="hp"/>
+      	</div>
+        <label>
+          <input type="checkbox" name="gdpr" required id="gdpr">
+          i'd like lab notes from <code><strong>pxi</strong></code> sent to this email and i'm happy with
+        </label> <span><a href="#imprint" onclick="getElementById('imprint').setAttribute('open', true);">the terms</a></span>
+        <input type="hidden" name="list" value="K6XGJHWQ4XmVUsKM892EuIIw"/>
+      	<input type="hidden" name="subform" value="yes"/>
+      </form>
     </section>
 
-    <section class="center--horizontal">
-      <button class="capture" type="button" name="start" onclick="captureVideo()">create floating webcam video</button>
-      <span class="capture">or</span>
-      <a href="captions.html" class="capture" name="start">create floating captions feed</a>
-      <button class="pip" type="button" name="pip" onclick="pipClick()">float video <sup>*</sup></button>
-      <button class="mirrorChange button--secondary" type="button" name="pip" onclick="toggleMirror(!isMirror)">
-        <span class="toMirror"> flip video </span>
-        <span class="toNormal"> reset flip </span>
-      </button>
-      <div class="cropping-ui">
-        <p lang="en">*bug: <strong>right click</strong> on the video to enable <strong>picture in picture</strong>.</p>
-        <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(640,360)">16:9</button>
-        <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(640,480)">4:3</button>
-        <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(360,480)">3:4</button>
-        <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(360,360)">1:1</button>
-        <button class="button--secondary button--size active" type="button" name="button" onclick="let custom=prompt('enter width and height in px, separated by a comma, e.g. 200,300').split(',');setCanvasSize(custom[0],custom[1])">custom</button>
-        <br><br>
-        <label for="moveCropX" class="crop--slider">move cutout left and right
-          <input id="moveCropX" type="range" name="" value="50" min="0" max="100" onmouseup="moveCanvasX(this.value)">
-        </label>
-        <label for="moveCropY" class="crop--slider">move cutout up and down
-          <input id="moveCropY" type="range" name="" value="50" min="0" max="100" onmouseup="moveCanvasY(this.value)">
-        </label>
-      </div>
-    </section>
-
-    <footer>
-      <div class="intro">
-      </div>
-      <section id="about" class="is-modal">
-        <button class="button--secondary" onclick="toggleAbout();">
-          <span lang="en">close</span>
-        </button>
-        <div lang="en">
-          <h3>how to use</h3>
-          <p><strong>pipfy.video</strong> can help you put a video image of yourself on your desktop. helpful for screen recordings and screen sharing in video conferencing software. no app download needed. just click <strong>capture video</strong> and grant your browser permission to access the camera. there is no server involved: the feed is only running on your computer.</p>
-          <p>thanks to the <strong>picture-in-picture</strong> browser technology you can arrange your video on your screen right along the software or presentation you want to share. the video will float above all other windows. even above a presentation running in full screen, if you enable the hover effect after starting presentation mode.</p>
-          <p>you can flip the image so the video works like a mirror. this should help orient yourself to interact with things on your screen. it makes pointing at things with your video image much easier.</p>
-          <p>you can crop the webcam to arrange the windows on your desktop in a helpful setup. we prefer to use our webcam in portrait mode to give more room to other elements on the screen.</p>
-          <p>you can run several instances in seperate browser tabs. you will need to connect multiple webcams. this way you could put a speaker and a sign language translator on the desktop in a live recording or streaming session.</p>
-          <p><strong>browser quirks:</strong> this uses quite recent browser technology. not all browsers behave as expected. <strong>do not run the camera in an inactive browser tab</strong> to keep the feed running smoothly. instead use a single, open browser window for each instance. the window does not need to be in focus, but it should not be minimized. works best in google chrome.</p>
-          <hr>
-          <p><a href="./captions.html">pipfy.captions</a> is an accessibility hack to create a captioning feed of your audio input. only works in google chrome. it uses the google speech-to-text API to generate automatic subtitles.</p>
-          <p>you can create a floating subtitle bar that hovers over active windows on your desktop. adjust the bar and text to your needs. if you switch languages you may have to restart the process for the API to understand you.</p>
-          <p>you can also share your subtitles as a live feed to a private peer-to-peer session so that others may read in their browser what you are saying.</p>
-          <p>reroute audio in your operating system (or use <a href="https://vb-audio.com/Cable/">a virtual cable</a>) to create subtitles for any sound source on your computer.</p>
-          <p>exporting the text (with time stamps) is currently disabled. you can enable it, if you know HTML and CSS or wait for us to improve usability.</p>
-          <p>automatic captioning is at best 90% accurate and it works only 90% of the time. please adjust your expectations. also the API is a bit finicky. we'll do what we can to improve the usability on our end, but ultimately we rely on a third party API to improve accuracy over time. as for privacy: we encrypt the text end-to-end, but the speech recognition happens on google servers.</p>
-          <hr>
-          <p>thanks. practice solidarity, stay positive. you got this.</p>
-          <p>made with lots of care but too little time from your friendly design lab at <a href="https://agentur.pxi.gmbh"><code>pxi|lab</code></a> (currently in german only).</p>
+    <details class="imprint" id="imprint">
+      <summary role="button" onclick="if(!this.parentElement.hasAttribute('open')){setTimeout(function(){window.scrollBy(0,150);},50);this.parentElement.setAttribute('aria-expanded','true')}else{this.parentElement.setAttribute('aria-expanded','false')}">
+        imprint & privacy policy
+      </summary>
+      <div class="flex-grid">
+        <div>
+          <p>
+            &copy; <span id="current-year"></span> &mdash;
+            <script>// show current year
+              document.getElementById("current-year").innerHTML = new Date().getUTCFullYear();
+            </script>
+            pixelcraft innovation GmbH
+            <br>Karl-Heine-Straße 99 | 04229 Leipzig
+            <br>GF Jakob Jochmann (ViSdP)
+            <br>HRB 29619 | Leipzig | UstID DE291272096
+            <br>+49 152 27094501 | <span aria-label="write us an email" class="js--email">lab [at] pxi.design</span>
+          </p>
         </div>
-      </section>
-      <section class="center--horizontal">
-        <button class="button--secondary" onclick="toggleAbout();">
-          <span lang="en">how to use</span>
-        </button>
-      </section>
-
-			<p>free. <a href="https://github.com/pxi-gmbh/pipfy">open source</a>. by <code><a href="#">pxi|agentur</a></code>.</p>
-			<p>related: <a href="https://slidenotes.io/">put presentations in your browser</a>. please give it a try.</p>
-			<details>
-				<summary>
-					imprint and privacy policy
-				</summary>
-				<div class="grid">
-					<div>
-						<small>
-							<p>
-								<br>&copy; <span id="current-year"></span> &mdash;
-								pixelcraft innovation GmbH
-								<br>Karl-Heine-Straße 99 | 04229 Leipzig
-								<br>GF Jakob Jochmann (ViSdP)
-								<br>HRB 29619 | Leipzig | UstID DE291272096
-								<br>+49 152 27094501 | <span aria-label="write us an email" class="js-eml">hi[at]email.io</span>
-							</p>
-						</small>
-					</div>
-						<div>
-							<small>
-								<p><br>privacy policy: the video stays in your browser on your device. we do not collect any data. by law, the hoster collects anonymous data. see their privacy notice <a href="https://www.strato.de/datenschutz/">here</a></p>
-							</small>
-						</div>
-				</div>
-
-			</details>
-    </footer>
-    <script type="text/javascript">
-			window.onload = function(){
-				myEmail();
-			}
-		</script>
-  </body>
-
-  <script type="text/javascript" src="pipfy.js"></script>
-  <script type="text/javascript" src="help.js"></script>
+        <div>
+          <p>we practice consent based data sovereignty. no tracking, no nonsense. if you subscribe to our emails you can withdraw consent at any time. poof. be advised that using auto-captions will require processing your speech on Google servers. see our detailed <a href="https://github.com/pxi-gmbh/pipfy/blob/main/legal.md">terms & privacy notice</a></p>
+        </div>
+      </div>
+    </details>
+  </footer>
+</body>
 </html>
