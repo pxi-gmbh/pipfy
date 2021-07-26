@@ -33,10 +33,12 @@ var captions = {
           captions.finalTranscript+=event.results[x][0].transcript;
           captions.displayLastFinal(event.results[x][0].transcript);
           captions.finals.push({timestamp:Date.now()-captions.starttime,content:event.results[x][0].transcript});
+          audioplayer.pushFinal(event.results[x][0].transcript);
         }else{
           interimTranscript+=event.results[x][0].transcript;
         }
       }
+      audioplayer.fireWordFound(interimTranscript);
       console.log('result fetched', interimTranscript);
       captions.interims.push({timestamp:Date.now()-captions.starttime,content:interimTranscript});
       captions.displayText(interimTranscript); //thats the one we are looking for i guess
@@ -616,3 +618,161 @@ this is especially useful because you can mix different list types to get sublis
   },
 
 }
+
+// keypress=function(e){
+//
+//   console.log(e);
+//   e.preventDefault();
+//   return false;
+// }
+// document.onkeypress = keypress;
+var audioplayer = {
+  init: function(){
+    this.player=document.getElementById('audioplayer');
+    this.actoutput = document.getElementById('act-output');
+    this.actStart = undefined;
+    this.finals= [];
+    this.finalsUl=document.getElementById('finals-list');
+    this.skipSeconds=0.5;
+    this.playAfterSkip = true;
+    document.onkeyup = function(e){
+      console.log(e);
+      if(document.activeElement.type=="input")return;
+      let key=e.key;
+      if(key!=' ' && key*1==key)key='nr';
+      switch (key) {
+        case 'c': audioplayer.start(true);
+          break;
+        case ' ':
+          if(audioplayer.isPlaying)audioplayer.stop();
+          else audioplayer.start(false);
+          break;
+        case 'ArrowLeft':
+          audioplayer.skipTime(-1*audioplayer.skipSeconds);
+          break;
+        case 'ArrowRight':
+          audioplayer.skipTime(1*audioplayer.skipSeconds);
+          break;
+        case 'p':
+          audioplayer.start(false,2000);
+          break;
+        case 'd':
+          if(document.activeElement.classList.contains('content'))audioplayer.deleteFinal(document.activeElement.name);
+          else audioplayer.deleteFinal();
+          break;
+        case 'e':
+          if(document.activeElement.classList.contains('content'))audioplayer.changeFinal(document.activeElement.name);
+          else audioplayer.changeFinal();
+          break;
+        case 'nr':
+          audioplayer.changeVoice(e.key*1);
+          break;
+        default:
+
+      }
+      return false;
+    };
+  },
+  start:function(caption_active, duration){
+    console.log('start audio and captions',captions);
+    this.player.play();
+    this.isPlaying = true;
+    if(caption_active)captions.start();
+    //else captions.initCaption();
+    if(duration){
+      clearTimeout(this.durationTimeout);
+      this.durationTimeout=setTimeout('audioplayer.stop('+this.player.currentTime+')',duration);
+    }
+  },
+  stop: function(setBackTime){
+    console.log('stop audio and captions');
+    this.player.pause();
+    this.isPlaying=false;
+    if(captions.recognition)captions.stop();
+    if(setBackTime)this.player.currentTime=setBackTime;
+  },
+  pushFinal: function(final){
+    this.finals.push({
+      start:this.actStart, end:this.player.currentTime,
+      text:final, voice:this.voice,
+    });
+    this.actStart=undefined;
+    this.actFinal=this.finals.length;
+    this.createFinalsList();
+  },
+  jumpToEnd: function(){
+    if(this.finals.length>0){
+      this.player.currentTime = this.finals[this.finals.length-1].end;
+    }
+  },
+  fireWordFound: function(interim){
+    if(this.actStart===undefined)this.actStart=this.player.currentTime;
+    this.actoutput=interim;
+  },
+  deleteFinal: function(nr){
+    if(confirm(`delete text nr ${nr}?\n`+this.finals[this.finals.length-1])){
+      if(nr===undefined||nr>=this.finals.length)this.finals.pop();
+      else this.finals.splice(nr,1);
+    }
+
+  },
+  skipTime: function(seconds){
+    this.player.currentTime+=seconds;
+    if(this.playAfterSkip){
+      let ms = seconds*2000;
+      if(ms<0)ms*=-1;
+      this.start(false, ms);
+    }
+  },
+  goToFinal: function(nr){
+    let time = this.finals[nr].start;
+    this.actFinal = nr;
+    this.player.currentTime=time;
+  },
+  createFinalsList: function(){
+    this.finalsUl.innerHTML='';
+    for(let x=0;x<this.finals.length;x++){
+      let li = document.createElement('li');
+      li.id='audio-finallist-entry'+x;
+      let content = document.createElement('button');
+      content.onClick=function(){
+        audioplayer.goToFinal(this.name);
+      }
+      content.name=x;
+      content.classList.add('content');
+      content.innerText=this.finals[x].text;
+      let begin = document.createElement('div');
+      begin.classList.add('begin');
+      begin.innerText=this.finals[x].start;
+      let end = document.createElement('div');
+      end.classList.add('end');
+      end.innerText=this.finals[x].end;
+      li.appendChild(begin);
+      li.appendChild(end);
+      li.appendChild(content);
+      this.finalsUl.appendChild(li);
+    }
+
+  },
+  changeFinal: function(nr){
+    let final;
+    if(nr!=undefined)final=this.finals[nr];
+    else final=this.finals[this.finals.length-1];
+    if(final==undefined){
+      this.finals[0]={start:0,end:0}
+      final=this.finals[0]
+    };
+    let newContent = prompt(`please enter new content. old content:\n ${final.text}`,final.text);
+    final.text=newContent;
+  },
+  changeSource: function(){
+    let src=prompt('type in url of audio file');
+    if(src)this.player.src=src;
+  },
+  changeVoice: function(nr){
+    this.voice=nr;
+    document.getElementById('act-voice').innerText = 'Voice '+nr;
+  },
+
+}
+audioplayer.init();
