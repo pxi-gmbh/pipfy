@@ -1,0 +1,1484 @@
+/* * collated styles from the pxi design system * */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/* * HTML RESET TO NORMALIZE BROWSERS * */
+/* ========================================================================== */
+
+@charset "UTF-8";
+/* set all elements to border-box model for easier size calculations */
+*,
+:after,
+:before {
+ box-sizing:border-box
+}
+
+:after,
+:before {
+ text-decoration:inherit;
+ vertical-align:inherit
+}
+
+html {
+  font-smoothing: auto;
+  font-feature-settings: "calt" on, "liga" on, "dlig" on, "kern" on;
+  text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-tab-size: 4;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: visible;
+  overflow-y: visible;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-weight: 400;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* reset display for browser consistency */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section {
+  display: block;
+}
+
+/* reset spacing for consistent vertical rhythm */
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dd,
+blockquote {
+  padding: 0; /* universal reset */
+  margin: 0; /* universal reset */
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+template,
+[hidden] {
+  display: none;
+}
+
+/* reset form elements for browser consistency */
+button,
+[aria-role="button"],
+input {
+  overflow: visible;
+}
+
+button,
+[aria-role="button"],
+select {
+  text-transform: none;
+}
+
+button,
+[aria-role="button"],
+html [type="button"],
+::-webkit-file-upload-button,
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; /* make clickable items styleable in mobile browsers */
+  font: inherit;
+}
+
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  white-space: normal;
+  padding: 0;
+}
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/* reset vertical-alignment for browser consistency */
+progress {
+  vertical-align: baseline; }
+
+/* hide SVG overflow in IE. */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+svg:not([fill]) {
+ fill:currentColor
+}
+
+textarea {
+  overflow: auto;
+}
+
+input,
+select,
+textarea {
+ -webkit-appearance:none;
+ -moz-appearance:none;
+ appearance:none;
+}
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  white-space: normal;
+  padding: 0;
+}
+
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* make clickable items stylable in mobile browsers */
+  font: inherit;
+}
+
+img,
+svg,
+audio,
+canvas,
+progress {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-style: none;
+  /* IE 10- fix */ }
+
+img,
+iframe {
+  border:none;
+}
+
+embed,
+object,
+iframe,
+video {
+  display: block;
+  width: 100%;
+  height: auto;
+ }
+
+@media (prefers-reduced-motion: reduce) {
+  /* disable animations for accessibility reasons (with tiny duration to keep JS-event listeners intact */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* * fix mobile webkit browser obstructing 100vh with ui * */
+body {
+  min-height: 100vh; /* fallback */
+  min-height: -webkit-fill-available;
+}
+html {
+  height: -webkit-fill-available;
+}
+
+
+
+/* ========================================================================== */
+/* * GLOBAL STYLES * */
+/* ========================================================================== */
+
+/*  TOC
+    - settings
+      - color scheme
+      - typography & layout
+      - components
+    - agnostic style defaults
+    - layouts
+ */
+
+
+
+/* * SETTINGS * */
+/* ========================================================================== */
+/* ========================================================================== */
+
+/* * COLOR SCHEME * */
+/* ========================================================================== */
+
+/* global colors */
+:root {
+  --color--text: #313131;
+  --color--background: #EBECF0;
+  --color--shadow: #BABECC;
+  --color--light: #ffffff;
+  --color--contrast: #91F5ED;
+  --color--focus: #00C5B5;
+  --color--black: #030303;
+  color: var(--color--text);
+  background-color: var(--color--background);
+}
+
+/* light theme follows OS settings, can be set via toggle button */
+[theme=light],
+:root:not([theme=dark]) {
+  --color--text:#313131;
+  --color--background: #EBECF0;
+  --color--shadow: #BABECC;
+  --color--light: #ffffff;
+  --color--contrast: #91F5ED;
+}
+
+/* dark theme follows OS settings, can be set via toggle button */
+[theme=dark] {
+  --color--text: #EBECF0;
+  --color--background: #191b20;
+  --color--shadow: #050505;
+  --color--light: #3f3f3f;
+  --color--contrast: #075751;
+}
+
+@media only screen and (prefers-color-scheme:dark) {
+:root:not([theme=light]) {
+    --color--text: #EBECF0;
+    --color--background: #191b20;
+    --color--shadow: #050505;
+    --color--light: #3f3f3f;
+    --color--contrast: #075751;
+  }
+}
+
+
+
+/* * TYPOGRAPHY SETTINGS * */
+/* ========================================================================== */
+
+/* font settings */
+:root {
+  --type--text: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu", "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --type--display: "Consolas", "Roboto Mono", "Ubuntu Monospace", "Menlo", "Noto Mono", "Oxygen Mono", "Liberation Mono", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --type--baseline: 1; /* base integer for typographic scale */
+  /* typographic scale + fluid size */
+  --type-scale--1: calc(var(--type--baseline) * 1rem + 0.7vw);
+  --type-scale--2: calc(var(--type--baseline) * 1.333rem + 0.7vw);
+  --type-scale--3: calc(var(--type--baseline) * 1.777rem + 0.7vw);
+  --type-scale--4: calc(var(--type--baseline) * 2.369rem + 0.7vw);
+  --type-scale--small: calc(var(--type--baseline) * 0.75rem + 0.7vw);
+  font-family: var(--type--text);
+  /* start with browser default (16px) */
+  font-size: 100%;
+}
+
+/* typographic layout settings */
+/*
+  the vertical rhythm of line-height is the composing unit for a fluid grid
+  that adapts to screen sizes with molten leading. we compute spacing with CSS
+  `calc`to bring all elements into the flow.
+ */
+:root {
+  --baseline: 1.35; /* base integer for computing harmonious spacing */
+  --vertical-rhythm: calc(var(--baseline) * 1rem);
+  line-height: var(--baseline);
+}
+@media (min-width: 768px) {
+  :root {
+    /* the vertical rhythm changes (molten leading) for better readability */
+    --baseline: 1.45;
+  }
+}
+
+
+
+/* * COMPONENT SETTINGS * */
+/* ========================================================================== */
+
+:root {
+  --border-width--default: 0.15rem;
+  --border-radius--subtle: 5px;
+  --border-radius--pronounced: 1000px;
+  --shadow--outer: -5px -5px 20px var(--color--light), 5px 5px 20px var(--color--shadow);
+  --shadow--inner: inset 3px 3px 10px var(--color--shadow), inset -5px -5px 10px var(--color--light);
+  --shadow--focus: 0 0 10px var(--color--focus);
+  --component--max-width: 32rem;
+}
+
+/*
+  TODO using box-model relevant properties (border) will cause wiggling.
+  using outline will not conform to curves (border-radius) outside of firefox
+  we can simulate curved outlines using stacked shadows instead:
+  comma separated from existing box-shadow add another shadow with greater distance
+  use outline as a fallback with transparent color.
+  high contrast mode will render it opaque and remove shadows
+*/
+EXAMPLE {
+  outline: 2px solid transparent; /* set fallback shadow-outline for Windows High Contrast Mode: will turn opaque */
+  box-shadow: 0 0 0 2px green, 0 0 0 4px green; /* use stacked box shadows, separated by commas, to preserve foundation and add more outline */
+}
+
+:focus {
+  outline-style: solid;
+  outline-color: var(--color--focus);
+  outline-width: 0.2rem;
+}
+
+::selection {
+  color: var(--color--background);
+  background-color: var(--color--text);
+}
+
+
+
+/* * AGNOSTIC STYLE DEFAULTS * */
+/* ========================================================================== */
+/* ========================================================================== */
+/*
+   to maximise modularity we create an agnostic foundation of styles with only
+   native HTML selectors. classes add specificity at a later step and overwrite
+   the foundation where more differentiation is needed.
+ */
+
+html {
+/* TODO für hyphens auf deutschen Seiten */
+/*-webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto; */
+}
+
+/* type-scale base font size declared on body to allow for inheriting from the cascade */
+body { font-size: var(--type-scale--1); }
+
+/* vertical rhythm: all elements are spaced by default. overwrite where relevant */
+body * + * {
+  margin-top: var(--vertical-rhythm);
+  margin-bottom: 0;
+}
+
+/* reset universal top-margins for elements that should not have it by default */
+* + br,
+option + option,
+th + th,
+th + td,
+td + th,
+td + td,
+li + li {
+  margin-top: 0;
+}
+
+header,
+footer,
+main,
+section {
+  padding-top: var(--vertical-rhythm);
+}
+
+footer {
+  padding-bottom: var(--vertical-rhythm);
+}
+
+/* applying the type scale (single line declarations are grouped) */
+h1 { font-size: var(--type-scale--4); }
+h2 { font-size: var(--type-scale--3); }
+h3 { font-size: var(--type-scale--2); }
+h4 { font-size: var(--type-scale--1); }
+small { font-size: var(--type-scale--small); }
+
+/* TODO: maybe have a look at the quote styling again */
+blockquote {
+  padding: var(--vertical-rhythm);
+  font-style: italic;
+  font-weight: bold;
+}
+
+blockquote footer {
+  text-align: right;
+  font-style: normal;
+  font-weight: normal;
+  padding: 0;
+  margin-top: 0;
+}
+
+cite::before {
+  content: "— ";
+}
+
+figure {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+figcaption { margin-top: 0; }
+
+ul,
+ol {
+  list-style-position: inside;
+}
+
+/* resetting universal leading for list elements */
+li + li {  margin-top: 0; }
+
+sub,
+sup {
+  vertical-align: baseline;
+  position: relative;
+  font-size: var(--type-scale--small);
+}
+sub { top: calc(var(--vertical-rhythm) / 3) }
+sup { top: calc(var(--vertical-rhythm) / -3) }
+
+mark {
+  color: var(--color--text);
+  background-color: var(--color--contrast);
+  outline-style: solid;
+  outline-color: var(--color--contrast);
+  outline-width: 0.2rem;
+}
+
+label { cursor: pointer; }
+
+form { display: block; }
+
+fieldset {
+  max-width: var(--component--max-width);
+  padding: calc(var(--vertical-rhythm) / 2);
+  border: var(--border-width--default) solid var(--color--text);
+  border-radius: var(--border-radius--subtle);
+}
+
+fieldset legend,
+fieldset label {
+    display: block;
+    padding-left: .2rem;
+    padding-right: .2rem;
+}
+
+legend + * { margin-top: 0; }
+
+/* interactive components */
+/*
+  we create a coherent look for all interactive components.
+  communicate visually what are elements you can interact with
+  and what specific interaction you can expect.
+ */
+
+/*
+  interaction: go somewhere (URL changes)
+*/
+a {
+  color: var(--color--text);
+  font-weight: bold;
+  text-underline-position: under;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: var(--border-width--default);
+  transition: all 0.15s ease-in-out;
+}
+
+a:hover {
+  text-decoration-thickness: calc(var(--border-width--default) * 2);
+  text-decoration-color: var(--color--focus);
+ }
+
+ a[href*="//"]:not([aria-label="pxi-lab-homepage"]):after{
+   content: " \2197";
+ }
+
+/*
+  interaction: interactive, but the URL will stay the same
+*/
+button,
+[role="button"],
+input,
+select,
+textarea {
+  color: var(--color--text);
+  background-color: var(--color--background);
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  border: var(--border-width--default) solid var(--color--text);
+  cursor: pointer;
+  /* transition: all 0.15s ease-in; */
+}
+
+/*
+  interaction: create a change in the state of what you are presented
+*/
+button,
+[role="button"] {
+  font-weight: bold;
+  text-transform: lowercase;
+  font-size: var(--type-scale--small);
+  width: auto;
+  padding-left: calc(var(--vertical-rhythm) / 2);
+  padding-right: calc(var(--vertical-rhythm) / 2);
+  margin-top: calc(var(--border-width--default) * -1); /*offset border width */
+  margin-bottom: calc(var(--border-width--default) * -1); /*offset border width */
+  border-radius: var(--border-radius--pronounced);
+}
+
+button:hover,
+[role="button"]:hover,
+button:focus,
+[role="button"]:focus,
+[aria-pressed="true"] {
+  border-color: var(--color--focus);
+  box-shadow: var(--shadow--focus);
+}
+
+/*
+  we use the details element as a means to toggle additional (secondary) information
+  to ensure that formerly hidden information comes into view at the edge of the
+  viewport we use an inline script that scrolls down a bit with a tiny delay.
+  Adjust as needed.
+*/
+/*
+  <details>
+    <summary role="button" onclick="if(!this.parentElement.hasAttribute('open')){setTimeout(function(){window.scrollBy(0,60);},50);this.parentElement.setAttribute('aria-expanded','true')}else{this.parentElement.setAttribute('aria-expanded','false')}">...</summary>
+    <div>...</div>
+  </details>
+ */
+details {
+}
+
+@​media (prefers-reduced-motion: no-preference) {
+  details { scroll-behavior: smooth; }
+}
+
+summary {
+  /* display: list-item; */ /* preserve the built-in rotating arrow */
+  list-style: none;
+  text-align: center;
+  cursor: pointer;
+  /* transition: all 0.15s ease-in; */
+}
+
+summary::-webkit-details-marker {
+  /* modify the arrow symbol in chrome. use list-style on the element in other browsers */
+  display: none;
+}
+
+details[open] summary + * {
+  animation: fade-down 0.15s ease-out forwards;
+}
+@keyframes fade-down {
+  0% {
+    opacity: 0;
+    transform: translatey(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translatey(0);
+  }
+}
+
+input,
+select,
+textarea {
+  display: block;
+  font-family: var(--type--display);
+  width: 100%;
+  max-width: var(--component--max-width);
+  padding: calc((var(--vertical-rhythm) / 2) - var(--border-width--default));
+  margin: 0;
+  box-shadow: var(--shadow--inner);
+  border-radius: var(--border-radius--subtle);
+}
+
+input:focus::placeholder { color: transparent; }
+
+input[type="reset"],
+input[type="submit"] {
+  /* use button type="submit" instead for better usability */
+}
+
+input[type=checkbox],
+input[type=radio] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  width: var(--vertical-rhythm);
+  height: var(--vertical-rhythm);
+  border-width: var(--border-width--default);
+  /* TODO properly offset border-width */
+  margin-top: calc(var(--border-width--default) * -2);
+  margin-right: calc(var(--vertical-rhythm) / 2);
+  vertical-align: middle;
+  box-shadow: none;
+}
+
+input[type=radio]{
+  border-radius: 99em;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background-color: var(--color--focus);
+  background-image: url("img/checkbox-check.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  border-color: var(--color--focus);
+  box-shadow: none;
+}
+
+input:not([type="range"]):hover,
+input:not([type="range"]):focus {
+  border-color: var(--color--focus);
+}
+
+[type="range"] {
+  padding: calc(var(--vertical-rhythm) / 2);
+  padding-left: 0;
+  padding-right: 0;
+  border: none;
+  box-shadow: none;
+}
+
+[type="range"]::-webkit-slider-runnable-track {
+  background-color: var(--color--text);
+  width: 100%;
+  height: calc(var(--vertical-rhythm) / 4);
+  border-radius: var(--border-radius--pronounced);
+}
+[type="range"]::-moz-range-track {
+  background-color: var(--color--text);
+  width: 100%;
+  height: calc(var(--vertical-rhythm) / 4);
+  border-radius: var(--border-radius--pronounced);
+}
+[type="range"]::-ms-track {
+  background-color: var(--color--text);
+  width: 100%;
+  height: calc(var(--vertical-rhythm) / 4);
+  border-radius: var(--border-radius--pronounced);
+}
+
+[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: var(--color--background);
+  width: var(--vertical-rhythm);
+  height: var(--vertical-rhythm);
+  border: solid var(--color--text) var(--border-width--default);
+  margin-top: -0.5rem;
+  box-shadow: none;
+  border-radius: var(--border-radius--pronounced);
+  transition: all 0.15s ease-in;
+}
+
+  [type="range"]:hover::-webkit-slider-thumb,
+  [type="range"]:active::-webkit-slider-thumb {
+    border-color: var(--color--focus);
+    box-shadow: var(--shadow--focus);
+  }
+  [type="range"]:active::-webkit-slider-thumb {
+    /* TODO add stacked outer shadow for more visible outline */
+  }
+
+[type="range"]::-moz-range-thumb {
+  background-color: var(--color--background);
+  width: var(--vertical-rhythm);
+  height: var(--vertical-rhythm);
+  border: solid var(--color--text) var(--border-width--default);
+  box-shadow: none;
+  border-radius: var(--border-radius--pronounced);
+  transition: all 0.15s ease-in;
+}
+  [type="range"]:hover::-moz-range-thumb,
+  [type="range"]:active::-moz-range-thumb {
+    border-color: var(--color--focus);
+    box-shadow: var(--shadow--focus);
+  }
+  [type="range"]:active::-moz-range-thumb {
+    /* TODO add stacked outer shadow for more visible outline */
+  }
+
+[type="range"]::-ms-thumb {
+  -webkit-appearance: none;
+  background-color: var(--color--background);
+  width: var(--vertical-rhythm);
+  height: var(--vertical-rhythm);
+  border: solid var(--color--text) var(--border-width--default);
+  box-shadow: none;
+  border-radius: var(--border-radius--pronounced);
+  transition: all 0.15s ease-in;
+}
+  [type="range"]:hover::-ms-thumb,
+  [type="range"]:active::-ms-thumb {
+    border-color: var(--color--focus);
+    box-shadow: var(--shadow--focus);
+  }
+  [type="range"]:active::-ms-thumb {
+    /* TODO add stacked outer shadow for more visible outline */
+  }
+
+[type="file"]::-webkit-file-upload-button {
+/* TODO create styling for upload button */
+}
+
+
+
+/* ========================================================================== */
+/* * LAYOUTS * */
+/* ========================================================================== */
+
+/* default: for screens wider than high */
+:root {
+  --type--baseline: .7;
+}
+
+/* for device screen ratio smaller than a square */
+@media only screen and (max-width: 99vh) {
+  :root {
+  --type--baseline: .8;
+  --component--max-width: 80vw;
+  }
+}
+
+/* for narrow device screens (ratio 2:1) */
+@media only screen and (max-width: 50vh) {
+  :root {
+    --type--baseline: .9;
+  }
+}
+
+/* base styling (single column) */
+body {
+  max-width: 74ch;
+  padding-left: calc(var(--vertical-rhythm) * 2);
+  padding-right: calc(var(--vertical-rhythm) * 2);
+  margin: auto;
+}
+
+/* * SIMPLE GRID * */
+/* ========================================================================== */
+/* vertical grid with 3 children - header / <- main -> / footer */
+
+/* TODO festlegen, was und wofür der grid ist. z.B. "news-app-grid" */
+.grid {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-column-gap: var(--vertical-rhythm);
+  grid-row-gap: var(--vertical-rhythm);
+  align-items: center;
+  height: 100%;
+}/* TODO flex für horizontale Einteilung einsetzen! */
+
+.grid > footer {
+  padding: 0;
+  margin: 0;
+}
+
+
+
+/* * FLEX-GRID * */
+/* ========================================================================== */
+/* container-sensitive horizontal grid that requires no media query */
+/*
+<div class="flex-grid">
+  <div>
+    <!-- width auto-adjusts to number of items in grid, collapses when too wide -->
+  </div>
+</div>
+*/
+
+.flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  /* set gutters as margin while "gap" is not widely supported */
+  --flex-grid--margin: var(--vertical-rhythm);
+  /* set the max width for items in the grid */
+  --flex-grid--query: 40em;
+  /* subtract container-width from max-width of items for use in calc() */
+  --flex-grid--modifier: calc(var(--flex-grid--query) - 100%);
+  /* offset margin of child elements by negative margin on parent */
+  margin: calc(var(--flex-grid--margin) * -1);
+}
+.flex-grid > * {
+  flex-grow: 1;
+  /* use calc() to collapse grid when items are too wide (turn integer negative) */
+  flex-basis: calc(var(--flex-grid--modifier) * 999);
+  /* gutters as margins on child elements */
+  margin: var(--flex-grid--margin);
+}
+
+/* n+X is the upper bound for number of items before collapsing the grid */
+/* enable where necessary */
+/*
+.flex-grid > :nth-last-child(n+5),
+.flex-grid > :nth-last-child(n+5) ~ * {
+  flex-basis: 100%;
+}
+*/
+
+/* TODO maybe add to helper classes */
+/* aligns a flex-grid column item vertically */
+.align-self\:center {
+  align-self: center;
+}
+
+/*
+   individual overrides
+   the backslash is a character escape. use class="margin-top:0" etc in html
+*/
+/* override default spacing. */
+.margin-top\:0 {
+  margin-top: 0;
+}
+.text-align\:center {
+  text-align: center;
+}
+.text-align\:left {
+  text-align: left;
+}
+.text-align\:right {
+  text-align: right;
+}
+.hyphens\:auto {
+  hyphens:auto;
+}
+
+/* ========= visibility classes ========= */
+
+/* accessibility: link to main that only shows up when tabbed to with keyboard */
+.skip-link {
+  text-align: center;
+  position: fixed;
+  width: 40%;
+  top: -20em;
+  left: 20%;
+  background: white;
+  padding: 24px;
+  display: inline-block;
+  z-index: 100;
+  box-shadow: 0 2px 4px #CCC;
+  transition: all 0.3s ease-in-out;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/*
+  states to be hardcoded or applied via javascript
+*/
+
+/* eliminate from DOM */
+.is-hidden {
+  display: none;
+}
+
+/* accessibility: text meant only for screen readers. */
+.is-invisible {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute !important;
+  word-wrap: normal !important;
+}
+
+/* use the :disabled attribute on <button>, <command>, <fieldset>, <keygen>, <optgroup>, <option>, <select>, <textarea> and <input>. */
+/* remember to set tabindex="-1" on the element in HTML to remove it from keyboard focus */
+.is-inactive {
+  text-decoration-color: currentColor;
+  border-color: currentColor;
+  pointer-events: none;
+  opacity: 0.3;
+}
+nav[aria-label="language selection"] > a:first-of-type{
+  text-decoration-color: var(--color--focus);
+}
+
+
+/*
+  give special prominence to specific elements
+*/
+.warning {
+  font-size: var(--type-scale--2);
+  padding: var(--vertical-rhythm);
+  border: var(--vertical-rhythm) solid var(--color--text);
+}
+
+.button--primary {
+  display: block;
+  color: var(--color--background);
+  background-color: var(--color--text);
+  width: 100%;
+  max-width: var(--component--max-width);
+  padding: calc((var(--vertical-rhythm) / 2) - var(--border-width--default));
+  margin-top: calc(var(--vertical-rhythm) - var(--border-width--default)); /*offset border width */
+  margin-bottom: calc(var(--border-width--default) * -1); /*offset border width */
+  box-shadow: var(--shadow--outer);
+
+}
+  .button--primary:hover,
+  .button--primary:focus {
+    /* TODO add flourish */
+  }
+
+.button--secondary {
+  color: var(--color--text);
+  background-color: var(--color--background);
+  border-color: currentColor;
+  width: 100%;
+  max-width: var(--component--max-width);
+  padding: calc((var(--vertical-rhythm) / 2) - var(--border-width--default));
+  margin-top: calc(var(--vertical-rhythm) - var(--border-width--default)); /*offset border width */
+  margin-bottom: calc(var(--border-width--default) * -1); /*offset border width */
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: var(--shadow--outer);
+}
+
+.button--appearance {
+  font-size: var(--type-scale--small);
+  font-weight: bold;
+  text-transform: lowercase;
+  text-decoration: none;
+  text-align: center;
+  border: var(--border-width--default) solid var(--color--text);
+  border-radius: var(--border-radius--pronounced);
+  width: max-content;
+  margin: 0 auto;
+}
+
+  .button--appearance:hover,
+  .button--appearance:focus {
+    border-color: var(--color--focus);
+    box-shadow: var(--shadow--focus);
+  }
+
+
+  /* ========================================================================== */
+  /* * NAV * */
+  /* ========================================================================== */
+  /*  TOC
+      - disclosure
+      - footer (imprint)
+   */
+
+  /* * DISCLOSURE * */
+  /* ========================================================================== */
+  /* collapsible disclosure elements for the main body */
+  /*
+    we use the details element as a means to toggle additional (secondary) information
+    to ensure that formerly hidden information comes into view at the edge of the
+    viewport we use an inline script that scrolls down a bit with a tiny delay.
+    Adjust as needed.
+  */
+  /*
+    <details class="disclosure">
+      <summary role="button" onclick="if(!this.parentElement.hasAttribute('open')){setTimeout(function(){window.scrollBy(0,80);},50);this.parentElement.setAttribute('aria-expanded','true')}else{this.parentElement.setAttribute('aria-expanded','false')}">...</summary>
+      <div>...</div>
+    </details>
+   */
+
+  details.disclosure summary {
+    position: relative;
+    font-weight: normal;
+  }
+  /* pseudo element as down arrow */
+  details.disclosure summary::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: .5rem solid transparent;
+    border-top-color: currentColor;
+    margin-left: .35rem;
+    margin-top: calc((var(--vertical-rhythm) / 2) + .1rem);
+  }
+  details[open].disclosure summary + * {
+    border-top: var(--color--text) solid var(--border-width--default);
+    animation: fade-down 0.15s ease-out forwards;
+  }
+
+  /*
+    a little connector from the summary button down to the text
+    for visual coherence
+  */
+  details[open].disclosure summary + *::before {
+    content: "";
+    display: block;
+    background-color: var(--color--text);
+    width: var(--border-width--default);
+    height: var(--vertical-rhythm);
+    margin: auto;
+    margin-top: calc(var(--vertical-rhythm) * -1);
+    animation: none;
+  }
+
+  details[open].disclosure summary ~ *:last-child {
+    border-bottom: var(--color--text) solid var(--border-width--default);
+  }
+
+
+
+  /* * COLLAPSIBLE (MARGIN) NOTE * */
+  /* ========================================================================== */
+  /* using the details element in an aside to bring foot notes into the main body */
+  /*
+    TODO could be set to expand all (e.g. apply :open) with javascript on wide screens */
+  /*
+    <aside aria-label="notes">
+      <details>
+        <summary role="button" onclick="if(!this.parentElement.hasAttribute('open')){setTimeout(50);this.parentElement.setAttribute('aria-expanded','true')}else{this.parentElement.setAttribute('aria-expanded','false')}">footnotes</summary>
+        <h3>...</h3>
+        <p>...</p>
+      </details>
+    </aside>
+  */
+
+  aside[aria-label="side note"] {
+    font-size: var(--type-scale--small);
+    min-height: var(--vertical-rhythm);
+    width: 100%;
+    margin-top: 0;
+  }
+
+  aside[aria-label="side note"] + * {
+    margin-top: 0;
+  }
+
+  aside[aria-label="side note"]::after {
+    content: "";
+    display: block;
+    clear: both;
+    width: 100%;
+  }
+
+  aside[aria-label="side note"] details {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  aside[aria-label="side note"] details[open] {
+    padding-left: var(--vertical-rhythm);
+    padding-right: var(--vertical-rhythm);
+    border-right: var(--border-width--default) solid var(--color--text);
+    border-left: var(--border-width--default) solid var(--color--text);
+    margin-bottom: var(--vertical-rhythm);
+  }
+
+  aside[aria-label="side note"] summary {
+    float: right;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: -1px;
+    border-radius: var(--border-radius--pronounced) 0 0 var(--border-radius--pronounced);
+  }
+
+  aside[aria-label="side note"] details[open] summary {
+    color: var(--color--background);
+    background: var(--color--text);
+    margin-right: calc(var(--vertical-rhythm) * -1);
+  }
+
+  aside[aria-label="side note"] details[open] summary + * {
+    padding-top: calc(var(--vertical-rhythm) * .75);
+    margin-top: 0;
+    pointer-events: none; /* protect summary from overlapping content padding */
+  }
+  /* make links clickable again */
+  aside[aria-label="side note"] details[open] summary + * a {
+    pointer-events: auto;
+  }
+
+
+
+  /* * HELP MODAL * */
+
+  /*
+  <aside aria-role="help section" id="help" class="modal--wrapper">
+    <!-- not a link to keep it out of tabindex -->
+    <span class="modal--background" aria-hidden="true" tabindex="-1" onclick="location.hash='#close'"></span>
+    <!-- trap buttons wrap the content. js will move user focus when triggered -->
+    <button id="help--trap-top" class="is-invisible">start of help modal, jump to last focusable element</button>
+    <div class="modal--content" id="help--content">
+      <a  href="#close" class="modal--link">close</a>
+      ...
+    </div>
+    <button id="help--trap-bottom" class="is-invisible">end of help modal, jump to first focusable element</button>
+  </aside>
+  <script type="text/javascript" src="_global-elements/modals.js"></script>
+  */
+
+  a.modal--link {
+    text-decoration: none;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border: var(--border-width--default) solid var(--color--text);
+    border-radius: var(--border-radius--pronounced);
+    cursor: pointer;
+    }
+    a.modal--link:hover,
+    a.modal--link:focus {
+      border-color: var(--color--focus);
+      box-shadow: var(--box-shadow--focus);
+    }
+
+  /* hovering close-button(link) for modal */
+  .modal--wrapper a.modal--link{
+    position: fixed;
+    background-color: var(--color--background);
+    box-shadow: 0 0 50px var(--color--shadow);
+    padding: 0;
+    padding-left: 0.3rem;
+    padding-right: 0.5rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transform: translateX(-2rem) translateY(-1rem);
+  }
+
+  /* set modal default state to invisible */
+  .modal--wrapper {
+    display: none;
+  }
+
+  /* make modal visible when targeted */
+  .modal--wrapper:target {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: var(--vertical-rhythm);
+    overflow: scroll;
+  }
+
+  .modal--content {
+    margin: auto;
+    padding: calc(var(--vertical-rhythm) * 1);
+    max-width: 60ch;
+    background-color: var(--color--background);
+    border: var(--border-width--default) solid var(--color--text);
+    border-radius: var(--border-radius--subtle);
+    box-shadow: 0 0 100px var(--color--shadow);
+  }
+  @media (min-width: 768px) {
+    .modal--content {
+      padding: calc(var(--vertical-rhythm) * 2.5);
+    }
+    /* hovering close-button(link) for modal */
+    .modal--wrapper a.modal--link{
+      transform: translateX(-4.5rem) translateY(-3rem);
+    }
+  }
+
+  /* span that sits behind modal and closes on click */
+  .modal--background {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    background: var(--color--background);
+    opacity: .7;
+  }
+
+  /* position bottom focus-trap element at top of its parent, so viewport is stable */
+  #help--trap-bottom {
+    position: absolute;
+    top: 0;
+  }
+
+
+
+  /* ========================================================================== */
+  /* * PXI BRANDING ELEMENTS * */
+  /* ========================================================================== */
+
+  /*  TOC
+      - logo
+      - theme toggle
+      - footer: about
+      - footer: imprint
+   */
+
+  #pxi-logo {
+    width: 5.5rem;
+    position: absolute;
+    top: 0;
+  }
+
+
+  /* * TOGGLE THEME * */
+  /* ========================================================================== */
+  /* switching dark mode and light mode */
+  /*
+    <div id="toggle--theme">
+      <button type="button" theme-toggle="light" aria-label="switch to light mode"><img src="_global-elements/img/light-button.svg" alt="light icon"></button>
+      <button type="button" theme-toggle="dark" aria-label="switch to dark mode"><img src="_global-elements/img/dark-button.svg" alt="dark icon"></button>
+    </div>
+    <script>
+      (function() {
+        var buttonsTheme = document.querySelectorAll('button[theme-toggle]');
+        for (var i = 0; i < buttonsTheme.length; i++) {
+
+          buttonsTheme[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            console.log("click");
+            document.querySelector('html').setAttribute(
+              'theme',
+              event.target.getAttribute('theme-toggle'));
+          },
+          false);
+
+        }
+      })();
+    </script>
+   */
+
+  #toggle--theme {
+    position: fixed;
+    left: .5rem;
+    top: var(--vertical-rhythm);
+  }
+  @media only screen and (max-width: 768px) {
+    #toggle--theme {
+      position: absolute;
+      top: 0;
+      left: 9rem;
+      margin-top: 0;
+    }
+  }
+
+  #toggle--theme * {
+    margin-top: 0;
+  }
+
+  #toggle--theme button {
+    background-color: transparent;
+    width: calc(var(--vertical-rhythm) * 1.5);
+    padding: 0.2em;
+    border: none;
+    box-shadow: none; /* reset button default */
+  }
+
+  /*
+   *  switch logic, making the theme respect the user preference as the default
+   */
+  [theme="dark"] button[theme-toggle="dark"] {
+    display: none;
+  }
+
+  [theme="dark"] button[theme-toggle="light"] {
+    display: inline;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    button[theme-toggle="dark"] {
+      display: none;
+    }
+    button[theme-toggle="light"] {
+      display: inline;
+    }
+  }
+
+  [theme="light"] button[theme-toggle="light"] {
+    display: none;
+  }
+
+  [theme="light"] button[theme-toggle="dark"] {
+    display: inline;
+  }
+
+  @media (prefers-color-scheme: light) {
+    button[theme-toggle="light"]{
+      display: none;
+    }
+    button[theme-toggle="dark"] {
+      display: inline;
+    }
+  }
+
+
+
+  /* * ADAPTABLE ABOUT SECTION IN FOOTER * */
+  /* ========================================================================== */
+  /* TODO set action to proper mailing script in live production */
+  /*
+  <section class="flex-grid" id="about">
+    <p>... tag line
+      you can <a href="https://gumroad.com/l/compad-cards" target="_blank">pay for coffee</a> if you want. we'd be thrilled.
+    </p>
+    <form action="index.html" method="post">
+      <label for="about--email" class="is-invisible">sign up for our newsletter</label>
+      <input type="email" id="about--email" required placeholder="your@email.com"><button type="submit">subscribe</button>
+      <br>
+      <label>
+        <input type="checkbox" name="gdpr" required="" id="gdpr">
+        i'd like to receive lab notes from <code><strong>pxi</strong>|lab</code> via email
+      </label>
+    </form>
+  </section>
+
+
+
+  </section>
+  */
+  #about {
+    font-size: var(--type-scale--small);
+    text-align: justify;
+    padding-top: var(--vertical-rhythm);
+    padding-bottom: var(--vertical-rhythm);
+  }
+  @media only screen and (max-width: 99vh) {
+    #about {
+      font-size: var(--type-scale--1);
+    }
+  }
+
+  #about button {
+    font-weight: bold;
+    width: 35%;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  #about input[type="email"] {
+    display: inline-block;
+    width: 62%;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-right: .3em;
+  }
+
+  #about input[type="checkbox"] {
+    width: 1.1em;
+    height: 1.1em;
+    margin: 0;
+  }
+
+
+
+  /* * COLLAPSIBLE FOOTER (IMPRINT) (DEFAULT CLOSED FOR WEB APPS) * */
+  /* ========================================================================== */
+  /* mirrors pxi-logo */
+  /*
+  <details class="imprint" id="imprint">
+    <summary role="button" onclick="if(!this.parentElement.hasAttribute('open')){setTimeout(function(){window.scrollBy(0,150);},50);this.parentElement.setAttribute('aria-expanded','true')}else{this.parentElement.setAttribute('aria-expanded','false')}">
+      imprint & privacy policy
+    </summary>
+    <div class="flex-grid">
+      <div>
+      ... imprint
+      </div>
+      <div>
+      ... privacy statement
+      </div>
+    </div>
+  </details>
+  */
+
+  details.imprint {
+    color: var(--color--background);
+    background-color: var(--color--text);
+    font-size: var(--type-scale--small);
+    margin: 0;
+    margin-top: 1rem;
+  }
+  details.imprint summary {
+    float: right;
+    position: relative;
+    bottom: 0rem;
+    color: var(--color--background);
+    background-color: var(--color--text);
+    font-family: var(--type--display);
+    font-weight: normal;
+    font-size: 80%;
+    margin: 0;
+    padding-right: 2.5rem;
+    padding-left: 1rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0;
+  }
+  /* pseudo element as down arrow */
+  details.imprint summary::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: .5em solid transparent;
+    border-top-color: currentColor;
+    margin-left: .4em;
+    margin-top: .5em;
+  }
+  details.imprint a {
+    color: var(--color--background);
+    text-decoration-color: var(--color--background);
+  }
+
+  details.imprint summary + * {
+    width: 100%;
+    padding: var(--vertical-rhythm);
+    padding-top: var(--vertical-rhythm);
+    margin-top: 0;
+    margin-left: 0;
+    pointer-events: none; /* protect summary from overlapping content padding */
+  }
+  /* make links clickable again */
+  details.imprint summary + * a {
+    pointer-events: auto;
+  }
