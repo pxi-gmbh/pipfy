@@ -115,11 +115,11 @@
       </div>
       <div class="cropping-ui">
         <div class="flex-grid">
-          <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(640,360)">16:9</button>
-          <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(640,480)">4:3</button>
-          <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(360,480)">3:4</button>
-          <button class="button--secondary button--size active" type="button" name="button" onclick="setCanvasSize(360,360)">1:1</button>
-          <button class="button--secondary button--size active" type="button" name="button" onclick="let custom=prompt('enter width and height in px, separated by a comma, e.g. 200,300').split(',');setCanvasSize(custom[0],custom[1])">custom</button>
+          <button class="button--secondary button--size active set-aspect-ratio" type="button" name="button" onclick="setCanvasSize(640,360, this)"><span class="screenreader-only">select aspect ratio of </span>16:9</button>
+          <button class="button--secondary button--size active set-aspect-ratio" type="button" name="button" onclick="setCanvasSize(640,480, this)"><span class="screenreader-only">select aspect ratio of </span>4:3</button>
+          <button class="button--secondary button--size active set-aspect-ratio" type="button" name="button" onclick="setCanvasSize(360,480, this)"><span class="screenreader-only">select aspect ratio of </span>3:4</button>
+          <button class="button--secondary button--size active set-aspect-ratio" type="button" name="button" onclick="setCanvasSize(360,360, this)"><span class="screenreader-only">select aspect ratio of </span>1:1</button>
+          <button class="button--secondary button--size active set-aspect-ratio" type="button" name="button" onclick="let custom=prompt('enter width and height in px, separated by a comma, e.g. 200,300').split(',');setCanvasSize(custom[0],custom[1], this)"><span class="screenreader-only">select a </span>custom<span class="screenreader-only"> aspect ratio - pops up dialog, asking for dimension in pixels</span></button>
         </div>
         <div class="flex-grid">
           <div>

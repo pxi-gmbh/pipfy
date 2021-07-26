@@ -148,12 +148,17 @@ function calculateCrop() {
   rangeY.classList.toggle("active", (diffY > 0));
 }
 
-function setCanvasSize(width, height) {
+function setCanvasSize(width, height, button) {
   let canvas = document.getElementById('canvas');
   canvas.width = width;
   canvas.height = height;
   let inputV = document.getElementById('inputvideo');
   let hasToResize = inputV.videoWidth>width || inputV.videoHeight > height;
+  if(button){
+    let allbuttons = document.getElementsByClassName('set-aspect-ratio');
+    for(let i=0;i<allbuttons.length;i++)allbuttons[i].classList.remove('selected');
+    button.classList.add('selected');
+  }
   console.log('has to resize:',hasToResize);
   if(!hasToResize && !isMirror){
     changeOutput();

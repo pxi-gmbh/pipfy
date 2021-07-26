@@ -92,6 +92,19 @@ button[name="start"] {
 
 .crop--slider {
 }
+span.screenreader-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    top: -2000px;
+    left: -2000px;
+}
+
+.set-aspect-ratio.selected {
+  /*the toggled button active state*/
+  background: var(--color--shadow);
+}
+
 
 /*temporary as it does not work without flip
 
