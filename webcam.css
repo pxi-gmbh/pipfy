@@ -75,7 +75,9 @@ button[name="start"] {
 .cropping-ui {
   text-align: center;
 }
-
+.cropping-ui button {
+  min-width: 8ch;
+}
 .cropping-ui input,
 /* HACK to quick-fix js only toggling the range-slider TODO fix in js */
 .cropping-ui input + label {
@@ -91,13 +93,6 @@ button[name="start"] {
 }
 
 .crop--slider {
-}
-span.screenreader-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    top: -2000px;
-    left: -2000px;
 }
 
 .set-aspect-ratio.selected {
