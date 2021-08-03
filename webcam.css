@@ -32,6 +32,7 @@ main * {
 }
 main .flex-grid {
   margin-top: var(--vertical-rhythm);
+  --flex-grid--query: 14ch;
 }
 main button {
   --component--max-width: 100%;
@@ -46,8 +47,11 @@ button[name="start"] {
   padding-right: 2rem;
 }
 
-.video-active #js--browser-warning {
+#js--browser-warning {
   display: none;
+}
+.video-active #js--browser-warning {
+  display: block;
 }
 
 .mirror-active .toMirror,
